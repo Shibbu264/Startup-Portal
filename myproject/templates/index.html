@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+ {% block body  %}
+ <h1 class="mx-auto my-12 text-center text-xl font-bold">Hello Guys!</h1>
+
+ <div id="carouselExampleSlidesOnly" class="carousel slide w-96 my-12 mx-auto block" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+        <img src="https://picsum.photos/200/300" class="d-block w-100" alt="https://picsum.photos/200/300">
+    </div>
+    <div class="carousel-item">
+      <img src="https://picsum.photos/200/300" class="d-block w-100" alt="https://picsum.photos/200/300">
+    </div>
+    <div class="carousel-item">
+      <img src="https://picsum.photos/200/300" class="d-block w-100" alt="https://picsum.photos/200/300">
+    </div>
+  </div>
+</div>
+
+<form method="post" class="mx-12 my-6" action="/home" >
+  {% csrf_token %}
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" name="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" name="password" id="exampleInputPassword1">
+  </div>
+  <div class="form-group form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+  </div>
+  <button type="submit" class="btn btn-primary text-black">Submit</button>
+</form>
+ {% endblock body %}
