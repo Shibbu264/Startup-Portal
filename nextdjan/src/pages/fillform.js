@@ -6,9 +6,9 @@ import { logout } from './api/auth';
 const API_BASE_URL = 'http://localhost:8000'; 
 const PersonalizedDashboard = () => {
     const [bio, setBio] = useState('');
-    const [profilePicture, setProfilePicture] = useState(null);
+    const [profilePicture, setProfilePicture] = useState('');
     const [username, setUsername] = useState('');
-
+    const [profilePictureUrl, setProfilePictureUrl] = useState('');
     const handlelogout = async (e) => {
         e.preventDefault();
         try {
@@ -51,6 +51,7 @@ window.location.replace("/")
         fetchUserData();
 
         const fetchUserData2 = async () => {
+            
             try {
                 const authToken = localStorage.getItem('authToken');
                 
@@ -76,26 +77,31 @@ window.location.replace("/")
     }, []);   // Run the effect only once after the component mounts
 
     const handleFormSubmit = async (e) => {
+       
         e.preventDefault();
 
         // Create a form data object to send bio and profile picture
         const formData = new FormData();
         formData.append('bio', bio);
         formData.append('profile_picture', profilePicture);
-
+        const authToken = localStorage.getItem('authToken');
         try {
             // Send a POST request to save personalized data
+            
+                
             await axios.post(`${API_BASE_URL}/api/save-personalized-data/`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Token ${authToken}`
                 },
             });
+            
+           
             // Optionally, you can display a success message to the user
-            console.log('Personalized data saved successfully!');
+           alert('Personalized data saved successfully!');
         } catch (error) {
             // Handle errors, e.g., display an error message to the user
-            console.error('Error saving personalized data:', error);
+            alert('Error saving personalized data:', error);
         }
     };
 
@@ -110,6 +116,8 @@ window.location.replace("/")
                 </label>
                 <label>
                     Profile Picture:
+                    
+                    {profilePictureUrl && <img src={profilePictureUrl} className='w-72 h-72 rounded-full' alt="Profile" />}
                     <input type="file" accept="image/*" onChange={(e) => setProfilePicture(e.target.files[0])} />
                 </label>
                 <button type="submit">Save</button>

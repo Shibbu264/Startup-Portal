@@ -26,13 +26,15 @@ const [Username,setUsername]=useState('');
     setConfirmPassword(e.target.value);
   };
 
-  const handleSubmit = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     try {
       await register(email,Username, password).then((data)=> {
 
-alert(data.message)
+
       })
+
+
     
       // Handle successful registration, e.g., redirect to login page
   } catch (error) {
@@ -40,6 +42,25 @@ alert(data.message)
       console.error('Registration failed:', error.message);
   }
   };
+
+  const handlelogin = async (e) => {
+    e.preventDefault();
+    try {
+     
+      await 
+       login(Username,password)
+
+    
+      // Handle successful registration, e.g., redirect to login page
+  } catch (error) {
+      // Handle registration error, e.g., show error message
+      alert('Login failed:', error.message);
+      
+  }
+  };
+
+
+
 
   const[Switch,setswitch]=useState(true);
 
@@ -62,7 +83,7 @@ alert(data.message)
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Create an account
               </h1>
-              <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
+              <form className="space-y-4 md:space-y-6" onSubmit={handleRegister}>
               <label class="relative inline-flex items-center cursor-pointer">
   <input onClick={()=>{setswitch(!Switch)}} type="checkbox" value="" class="sr-only peer"/ >
   <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
@@ -134,44 +155,45 @@ alert(data.message)
           </div>
         </div>
       </section>:
-      <section class="bg-gray-50 dark:bg-gray-900">
-  <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-      <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-          <img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo"/>
-          Flowbite    
+      <section className="bg-gray-50 dark:bg-gray-900">
+  <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+      <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+          <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo"/>
+          AYUSH STARTUP PORTAL   
       </a>
-      <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-          <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-              <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+      <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                   Sign in to your account
               </h1>
-              <form class="space-y-4 md:space-y-6" action="#">
-              <label class="relative inline-flex items-center cursor-pointer">
-  <input onClick={()=>{setswitch(!Switch)}} type="checkbox" value="" class="sr-only peer"/ >
-  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-  <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Toggle me</span>
+              <form className="space-y-4 md:space-y-6" onSubmit={handlelogin}>
+              <label className="relative inline-flex items-center cursor-pointer">
+  <input onClick={()=>{setswitch(!Switch)}} type="checkbox" value="" className="sr-only peer" />
+  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+  <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Toggle me</span>
 </label>
                   <div>
-                      <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                      <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required=""/>
+                      <label for="Username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Username</label>
+                      <input type="Username"   value={Username}
+                    onChange={handleUsernameChange} name="Username" id="Username" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required=""/>
                   </div>
                   <div>
-                      <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                      <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required=""/>
+                      <label for="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                      <input type="password" value={password} onChange={handlePasswordChange} name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required=""/>
                   </div>
-                  <div class="flex items-center justify-between">
-                      <div class="flex items-start">
-                          <div class="flex items-center h-5">
-                            <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required=""/>
+                  <div className="flex items-center justify-between">
+                      <div className="flex items-start">
+                          <div className="flex items-center h-5">
+                            <input id="remember" aria-describedby="remember" type="checkbox" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required=""/>
                           </div>
-                          <div class="ml-3 text-sm">
-                            <label for="remember" class="text-gray-500 dark:text-gray-300">Remember me</label>
+                          <div className="ml-3 text-sm">
+                            <label for="remember" className="text-gray-500 dark:text-gray-300">Remember me</label>
                           </div>
                       </div>
-                      <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
+                      <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
                   </div>
-                  <button type="submit" class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign in</button>
-                  <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+                  <button type="submit"  className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign in</button>
+                  <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                       Don’t have an account yet? <button onClick={()=>{setswitch(!Switch)}}>Sign up</button>
                   </p>
               </form>
