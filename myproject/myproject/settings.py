@@ -27,7 +27,14 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000'
+]
+CORS_ALLOWED_CREDENTIALS =True
+CORS_ALLOWED_ALL_ORIGINS=True
 
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,10 +48,13 @@ INSTALLED_APPS = [
     "django_nextjs",
     'rest_framework',
     'api',
-    'auth1'
+    'auth1',
+    'corsheaders',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -55,6 +65,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'myproject.urls'
+
+
 
 TEMPLATES = [
     {
@@ -132,5 +144,13 @@ STATICFILES_DIRS =[
  os.path.join(BASE_DIR,"static"),
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        # ... other authentication classes if needed
+    ],
+    # ... other settings
+}
 
 

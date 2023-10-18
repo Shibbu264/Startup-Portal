@@ -16,12 +16,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from home import views
+from auth1 import views
 admin.site.site_header="Shivu's admin panel"
 admin.site.site_title="Shivu was here!"
 urlpatterns = [
     path('admin/', admin.site.urls),
   
-      path('api/', include('api.urls')),
-]
+    
 
+
+    # ... other URL patterns
+    path('api/login/', views.login_view, name='login'),
+    path('api/logout/', views.logout_view, name='logout'),
+      path('api/register/', views.register_view, name='register'),
+       path('api/save-personalized-data/', views.save_personalized_data, name='save_personalized_data'),
+       path('api/get-user-data/', views.get_user_data, name='get_user_data'),
+        path('api/get-authenticated-user-info/', views.get_authenticated_user_info, name='get_authenticated_user_info'),
+]
