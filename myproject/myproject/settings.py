@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'auth1',
     'corsheaders',
     'rest_framework.authtoken',
+    'publicuser'
 ]
 MEDIA_ROOT = os.path.join(BASE_DIR, 'profile_pics')
 MEDIA_URL = '/media/'
@@ -86,7 +87,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'myproject.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases

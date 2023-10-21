@@ -12,7 +12,7 @@ class Question(models.Model):
         return self.text
 class PersonalizedData(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    # Add personalized fields as needed
+  
     bio = models.TextField(blank=True, null=True)
     profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
     question = models.ManyToManyField(Question, related_name='personalized_data_questions')
@@ -21,3 +21,5 @@ class PersonalizedData(models.Model):
 
     def __str__(self):
         return self.user.username
+    
+

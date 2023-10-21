@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from rest_framework.authtoken.views import ObtainAuthToken
 from django.http import JsonResponse
 from django.contrib.auth import get_user_model
+
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
@@ -72,10 +73,11 @@ def register_view(request):
     if request.method == 'POST':
         username = request.data.get('username')
         password = request.data.get('password')
+        email=request.data.get('email')
         if username and password:
-            User = get_user_model()
+            User=get_user_model()
             if not User.objects.filter(username=username).exists():
-                user = User.objects.create_user(username=username, password=password,email=username)
+                user = User.objects.create_user(username=username, password=password,email=email)
                 personalized_data = PersonalizedData(user=user) 
                 personalized_data.save()
                 personalized_dashboard_url = 'http://localhost:3000/fillform' 
@@ -101,13 +103,18 @@ def save_personalized_data(request):
 
         
             # Update or create personalized data for the user
+            defaults = {
+                'bio': bio,
+                'answers': answers,
+            }
+
+            # Only update the profile_picture field if it is not an empty string
+            if profile_picture is not None and profile_picture != '':
+                defaults['profile_picture'] = profile_picture
+
             personalized_data, created = PersonalizedData.objects.update_or_create(
                 user=user,
-                defaults={
-                    'bio': bio,
-                    'profile_picture': profile_picture,
-                    'answers': answers,
-                }
+                defaults=defaults
             )
 
             return Response({'message': 'Personalized data saved successfully'})
