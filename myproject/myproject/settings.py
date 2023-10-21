@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework.authtoken',
 ]
-
+MEDIA_ROOT = os.path.join(BASE_DIR, 'profile_pics')
+MEDIA_URL = '/media/'
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',

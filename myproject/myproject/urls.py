@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from auth1 import views
+from django.conf import settings
+from django.conf.urls.static import static
 admin.site.site_header="Shivu's admin panel"
 admin.site.site_title="Shivu was here!"
 urlpatterns = [
@@ -32,4 +34,7 @@ urlpatterns = [
        path('api/save-personalized-data/', views.save_personalized_data, name='save_personalized_data'),
        path('api/get-user-data/', views.get_user_data, name='get_user_data'),
         path('api/get-authenticated-user-info/', views.get_authenticated_user_info, name='get_authenticated_user_info'),
+        path('api/get-questions/', views.get_questions, name='get_questions'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
