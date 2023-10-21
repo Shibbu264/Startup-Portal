@@ -8,7 +8,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.shortcuts import get_object_or_404
-from .models import PersonalizedData
+from .models import PersonalizedData,Question
 from .serializers import PersonalizedDataSerializer
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
@@ -17,6 +17,7 @@ from rest_framework.permissions import IsAuthenticated
 from .models import PersonalizedData
 from .serializers import PersonalizedDataSerializer
 from django.views.decorators.csrf import csrf_exempt
+import json
 
 
   # Require authentication for this view
@@ -94,26 +95,26 @@ def save_personalized_data(request):
         if serializer.is_valid():
             # Get the current user from the request
             user = request.user
+            bio = serializer.validated_data.get('bio', '')
+            profile_picture = serializer.validated_data.get('profile_picture', None)
+            answers = serializer.validated_data.get('answers', [])
+
+        
             # Update or create personalized data for the user
             personalized_data, created = PersonalizedData.objects.update_or_create(
                 user=user,
                 defaults={
-                    'bio': serializer.validated_data.get('bio', ''),
-                    'profile_picture': serializer.validated_data.get('profile_picture', None),
+                    'bio': bio,
+                    'profile_picture': profile_picture,
+                    'answers': answers,
                 }
             )
-            if not created:
-                personalized_data.bio = serializer.validated_data.get('bio', '')
-                personalized_data.profile_picture = serializer.validated_data.get('profile_picture', None)
-                personalized_data.save() 
-            else:
-                # If personalized data is created, set bio and profile picture
-                personalized_data.bio = serializer.validated_data.get('bio', '')
-                personalized_data.profile_picture =serializer.validated_data.get('profile_picture', None)
-                personalized_data.save()       
+
             return Response({'message': 'Personalized data saved successfully'})
         else:
             return Response(serializer.errors, status=400)
+    else:
+        return Response({'error': 'Invalid request method'}, status=400)
         
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])  # Use appropriate authentication method (Token, Session, etc.)
@@ -140,3 +141,8 @@ def get_authenticated_user_info(request):
         # ...
     }
     return Response(response_data)
+
+@api_view(['GET'])
+def get_questions(request):
+    questions = Question.objects.values_list('text', flat=True)
+    return Response({'questions': list(questions)})
