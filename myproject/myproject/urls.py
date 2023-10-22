@@ -42,6 +42,8 @@ urlpatterns = [
        path('api/get-user-data/', views.get_user_data, name='get_user_data'),
         path('api/get-authenticated-user-info/', views.get_authenticated_user_info, name='get_authenticated_user_info'),
         path('api/get-questions/', views.get_questions, name='get_questions'),
+         path('api/analyze-sentiment/', views.analyze_sentiment_api, name='analyze-sentiment-api'),
+         path('api/personalized-data/',views.personalized_data_api,name='personalized-data-api')
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

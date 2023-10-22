@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from rest_framework.authtoken.views import ObtainAuthToken
 from django.http import JsonResponse
 from django.contrib.auth import get_user_model
+    
 
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -153,3 +154,32 @@ def get_authenticated_user_info(request):
 def get_questions(request):
     questions = Question.objects.values_list('text', flat=True)
     return Response({'questions': list(questions)})
+
+
+
+# Sentimental Analysis thing
+from textblob import TextBlob
+def analyze_sentiment(text):
+    analysis = TextBlob(text)
+    # Determine the polarity (positive, negative, or neutral) and subjectivity of the text
+    polarity = analysis.sentiment.polarity
+    subjectivity = analysis.sentiment.subjectivity
+    return polarity, subjectivity
+@api_view(['POST'])
+def analyze_sentiment_api(request):
+    if request.method == 'POST':
+        text = request.data.get('text', '')
+        polarity, subjectivity = analyze_sentiment(text)
+        # You can format the response data as needed
+        response_data = {
+            'polarity': polarity,
+            'subjectivity': subjectivity
+        }
+        return Response(response_data)
+
+@api_view(['GET'])
+def personalized_data_api(request):
+    if request.method == 'GET':
+        personalized_data = PersonalizedData.objects.all()
+        serializer = PersonalizedDataSerializer(personalized_data, many=True)
+        return Response(serializer.data)        
