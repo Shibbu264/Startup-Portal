@@ -10,6 +10,7 @@ const Publicuserdashboard
     const [profilePicture, setProfilePicture] = useState('');
     const [username, setUsername] = useState('');
     const [profilePictureUrl, setProfilePictureUrl] = useState('');
+    const [personalizedData,setPersonalizedData]=useState([])
     const [answers, setAnswers] = useState([""]);
     const handlelogout = async (e) => {
         e.preventDefault();
@@ -76,6 +77,21 @@ window.location.replace("/")
 
         fetchUserData2();
 
+        const fetchData = async () => {
+            try {
+              const response = await axios.get(`${API_BASE_URL}/api/personalized-data/`);
+             
+            //   const data = await response.json();
+              console.log(response.data)
+              setPersonalizedData(response.data);
+            } catch (error) {
+              console.error('Error fetching data:', error);
+            }
+          }
+      
+          fetchData();
+
+
 
     }, []);   // Run the effect only once after the component mounts
 
@@ -120,6 +136,7 @@ window.location.replace("/")
     // }, []);
     return (
         <>
+        <div className='border-x-2 border-y-2 border-blue-50 w-fit block mx-auto p-6 mt-6'>
              <h1 className='text-3xl text-center my-4'>Welcome, {username}!</h1>
             <h2 className='text-xl text-center my-2'>Personalized Dashboard</h2>
            
@@ -128,11 +145,26 @@ window.location.replace("/")
                 <label>
                     Profile Picture:
                     
-                    {profilePictureUrl && <img src={`http://localhost:8000`+profilePictureUrl} className='w-64 h-64 my-6 block mx-auto rounded-full' alt="Profile" />}
+                    {profilePictureUrl && <img src={`http://localhost:8000`+profilePictureUrl} className='w-36 h-36 my-6 block mx-auto rounded-full' alt="Profile" />}
                     <input type="file" accept="image/*" onChange={(e) => setProfilePicture(e.target.files[0])} />
                 </label>
-              
-            </form>
+                <button className='rounded-lg p-2 my-3 w-28 bg-green-500 block 'onClick={handleFormSubmit}>Save</button>
+                </form>
+                </div>
+                <div>
+                    <h1 className='text-white text-center font-bold text-4xl my-4'>STARTUP LISTS</h1>
+      {personalizedData.map((data) => (
+        <div key={data.id} className="max-w-sm block mx-auto bg-white border my-6 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+          <h2 className='my-2 text-center'>User ID: {data.user.id}</h2>
+        <div className='ml-3'>  <p>Username: {data.user.username}</p>
+          <p>Email: {data.user.email}</p>
+          <p>Bio: {data.bio}</p></div>
+          <img className='w-56 h-56' src={`http://localhost:8000`+data.profile_picture} alt="Profile" />
+         
+        </div>
+      ))}
+    </div>
+          
 
 
 
@@ -140,7 +172,7 @@ window.location.replace("/")
 
 <div className='flex justify-center gap-12  '>
 <button onClick={handlelogout} className='rounded-lg w-28 p-2 my-3 bg-red-500 block '>Logout</button>
-<button className='rounded-lg p-2 my-3 w-28 bg-green-500 block 'onClick={handleFormSubmit}>Save</button>
+
 </div> 
 
 
