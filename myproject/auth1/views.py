@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from rest_framework.authtoken.views import ObtainAuthToken
 from django.http import JsonResponse
 from django.contrib.auth import get_user_model
-    
+from auth1.backends import CustomBackend 
 
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -77,8 +77,8 @@ def register_view(request):
         email=request.data.get('email')
         if username and password:
             User=get_user_model()
-            if not User.objects.filter(username=username).exists():
-                user = User.objects.create_user(username=username, password=password,email=email)
+            if not User.objects.filter(username=email).exists():
+                user = User.objects.create_user(username=email, password=password,email=email)
                 personalized_data = PersonalizedData(user=user) 
                 personalized_data.save()
                 personalized_dashboard_url = 'http://localhost:3000/fillform' 
@@ -125,7 +125,7 @@ def save_personalized_data(request):
         return Response({'error': 'Invalid request method'}, status=400)
         
 @api_view(['GET'])
-@authentication_classes([TokenAuthentication])  # Use appropriate authentication method (Token, Session, etc.)
+@authentication_classes([TokenAuthentication],)  # Use appropriate authentication method (Token, Session, etc.)
 @permission_classes([IsAuthenticated])  # Ensure the user is authenticated
 def get_user_data(request):
     user = request.user
@@ -183,3 +183,49 @@ def personalized_data_api(request):
         personalized_data = PersonalizedData.objects.all()
         serializer = PersonalizedDataSerializer(personalized_data, many=True)
         return Response(serializer.data)        
+from google.oauth2 import id_token
+
+from google.auth.transport import requests
+from django.contrib.sessions.models import Session
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.contrib.auth import get_user_model
+from oauth2_provider.models import AccessToken
+from django.utils import timezone
+class GoogleLoginAPIView(APIView):
+    def post(self, request):
+        access_token = request.data.get('access_token')
+        
+        try:
+            # Verify the Google access token
+            id_info = id_token.verify_oauth2_token(access_token, requests.Request())
+
+            # Get user information from the verified token
+            user_email = id_info.get('email')
+            
+            User = get_user_model()
+            user = User.objects.filter(email=user_email).first()
+            if not user:
+              
+                # If user does not exist, create a new user
+                 user, created = User.objects.get_or_create(username=user_email, email=user_email)
+            
+              
+                # Create or retrieve a token for the user (if you are using token authentication)
+            token, created = Token.objects.get_or_create(user=user)
+            
+            # Return authentication token
+            return Response({
+                'message': 'Successfully authenticated',
+                'access_token': token.key,
+            }, status=status.HTTP_200_OK)
+
+        except ValueError:
+            # Invalid token
+            return Response({'error': 'Invalid access token'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        except Exception as e:
+            # Handle other exceptions
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

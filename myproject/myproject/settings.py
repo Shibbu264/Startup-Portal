@@ -49,9 +49,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'auth1',
-    'corsheaders',
+   
     'rest_framework.authtoken',
-    'publicuser'
+    'publicuser',
+    'oauth2_provider',
 ]
 MEDIA_ROOT = os.path.join(BASE_DIR, 'profile_pics')
 MEDIA_URL = '/media/'
@@ -158,5 +159,23 @@ REST_FRAMEWORK = {
     ),
     # ... other settings
 }
+AUTHENTICATION_CLASSES = (
+    'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+)
 
-
+OAUTH2_PROVIDER = {
+    'ACCESS_TOKEN_EXPIRE_SECONDS': 3600,
+    'AUTHORIZATION_CODE_EXPIRE_SECONDS': 3600,
+    'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'},
+}
+AUTHENTICATION_BACKENDS = (
+   
+    # ...
+    'django.contrib.auth.backends.ModelBackend',
+)
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '809328833359-t6inuf1bllcbrhvnro3a03f0pd0kovqu.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = True  # Ensure https for redirect URIs
+LOGIN_URL = 'http://localhost:3000/'
+LOGOUT_URL = 'your-logout-url'
+LOGIN_REDIRECT_URL = 'http://localhost:3000/welcome'

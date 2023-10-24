@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { logout1 } from './api/auth';
+import Footer from '@/components/footer';
 const API_BASE_URL = 'http://localhost:8000'; 
 const Publicuserdashboard
  = () => {
@@ -12,6 +13,7 @@ const Publicuserdashboard
     const [profilePictureUrl, setProfilePictureUrl] = useState('');
     const [personalizedData,setPersonalizedData]=useState([])
     const [answers, setAnswers] = useState([""]);
+    const [authstate,setAuth]=useState(false);
     const handlelogout = async (e) => {
         e.preventDefault();
         try {
@@ -45,6 +47,7 @@ window.location.replace("/")
                 });
                 
                 setUsername(response.data.username);
+               
             } catch (error) {
                 // Handle error if the API call fails
                 console.error('Error fetching user data:', error);
@@ -57,7 +60,7 @@ window.location.replace("/")
             
             try {
                 const authToken = localStorage.getItem('authToken');
-                
+               
                 // Include the token in the request headers
                 const response = await axios.get(`${API_BASE_URL}/api/get-user-data1`, {
                     headers: {
@@ -134,8 +137,11 @@ window.location.replace("/")
     //       console.error('Error fetching questions:', error);
     //     });
     // }, []);
-    return (
-        <>
+    
+    
+    
+    return (     
+       <>
         <div className='border-x-2 border-y-2 border-blue-50 w-fit block mx-auto p-6 mt-6'>
              <h1 className='text-3xl text-center my-4'>Welcome, {username}!</h1>
             <h2 className='text-xl text-center my-2'>Personalized Dashboard</h2>
@@ -179,7 +185,7 @@ window.location.replace("/")
 
 
 
-
+<Footer/>
      </>
     );
 };

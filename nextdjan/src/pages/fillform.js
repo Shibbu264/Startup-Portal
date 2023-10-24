@@ -3,13 +3,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { logout } from './api/auth';
+import { useRouter } from 'next/router'
+import Footer from '@/components/footer';
 const API_BASE_URL = 'http://localhost:8000'; 
 const PersonalizedDashboard = () => {
+    let router= useRouter()
     const [bio, setBio] = useState('');
     const [profilePicture, setProfilePicture] = useState('');
     const [username, setUsername] = useState('');
     const [profilePictureUrl, setProfilePictureUrl] = useState('');
     const [answers, setAnswers] = useState([""]);
+    const [authstate,setAuth]=useState(false);
     const handlelogout = async (e) => {
         e.preventDefault();
         try {
@@ -43,6 +47,7 @@ window.location.replace("/")
                 });
                 
                 setUsername(response.data.username);
+                
             } catch (error) {
                 // Handle error if the API call fails
                 console.error('Error fetching user data:', error);
@@ -168,7 +173,7 @@ window.location.replace("/")
 
 
 
-
+<Footer/>
      </>
     );
 };

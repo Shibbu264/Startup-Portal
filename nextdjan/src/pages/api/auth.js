@@ -147,3 +147,46 @@ export const register1 = async (email,username, password) => {
   } catch (error) {
       throw error.response.data;
   }}
+
+ export const  sendTokenToBackend = async (accessToken) => {
+    // Replace 'YOUR_BACKEND_API_ENDPOINT' with the actual endpoint URL
+    fetch(`${API_BASE_URL}/api/google-login/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ access_token: accessToken }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+        localStorage.setItem('authToken', data.access_token)
+        window.location.href = "/welcome";
+       
+        
+      })
+      .catch((error) => {
+        // Handle error
+        console.error('Error sending token to backend:', error);
+      });
+  };
+
+  export const  sendTokenToBackend1 = async (accessToken) => {
+    // Replace 'YOUR_BACKEND_API_ENDPOINT' with the actual endpoint URL
+    fetch(`${API_BASE_URL}/api/google-login/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ access_token: accessToken }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        localStorage.setItem('authToken', data.access_token)
+        window.location.replace("/fillform");
+      })
+      .catch((error) => {
+        // Handle error
+        console.error('Error sending token to backend:', error);
+      });
+  };
