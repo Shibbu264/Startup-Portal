@@ -7,13 +7,13 @@ import { useRouter } from 'next/router'
 import Footer from '@/components/footer';
 import Navbar from '@/components/navbar';
 import Sidebar1 from '@/components/sidebar';
+import Founderdashboard from '@/components/founderdashboard';
 const API_BASE_URL = 'http://localhost:8000'; 
 const PersonalizedDashboard = () => {
     let router= useRouter()
-    const [bio, setBio] = useState('');
-    const [profilePicture, setProfilePicture] = useState('');
-    const [username, setUsername] = useState('');
-    const [profilePictureUrl, setProfilePictureUrl] = useState('');
+  const[dashvisible,setdashvisibily]=useState(true)
+
+  
     const [answers, setAnswers] = useState([""]);
     const [authstate,setAuth]=useState(false);
     const handlelogout = async (e) => {
@@ -38,7 +38,7 @@ window.location.replace("/")
                 
     useEffect(() => {
        
-        const fetchUserData = async () => {
+        const checkAuth = async () => {
             try {
                 const authToken = localStorage.getItem('authToken');
                 
@@ -49,7 +49,7 @@ window.location.replace("/")
                     }
                 });
                 
-                setUsername(response.data.username);
+               
                 setAuth(true)
             } catch (error) {
                 window.location.replace("/")
@@ -58,31 +58,9 @@ window.location.replace("/")
             }
         };
 
-        fetchUserData();
+       checkAuth();
 
-        const fetchUserData2 = async () => {
-            
-            try {
-                const authToken = localStorage.getItem('authToken');
-                
-                // Include the token in the request headers
-                const response = await axios.get(`${API_BASE_URL}/api/get-user-data`, {
-                    headers: {
-                        'Authorization': `Token ${authToken}`
-                    }
-                });
-                
-               
-                setBio(response.data.bio)
-                setProfilePictureUrl(response.data.profile_picture)
-                console.log(profilePictureUrl)
-            } catch (error) {
-                // Handle error if the API call fails
-                console.error('Error fetching user data:', error);
-            }
-        };
-
-        fetchUserData2();
+  
 
 
     }, []);   // Run the effect only once after the component mounts
@@ -91,6 +69,12 @@ window.location.replace("/")
     const toggleSidebar = () => {
       setSidebarVisibility(!isSidebarVisible);
     };
+     const handledashboard = () => {
+     setdashvisibily(true)
+    };
+    const handlehome =()=>{
+        setdashvisibily(false)
+    }
     const handleFormSubmit = async (e) => {
         e.preventDefault();
     
@@ -135,29 +119,14 @@ window.location.replace("/")
         authstate?
         <>
         <Navbar onSidebarToggle={toggleSidebar} />
-        {isSidebarVisible && <Sidebar1 />}
-             <h1 className='text-3xl font-semibold text-black text-center my-4'>Welcome, {username}!</h1>
-            <h2 className='text-3xl text-black font-bold text-center my-2'>Personalized Dashboard</h2>
-           
-            <form className='text-xl text-center  my-2 flex-col flex gap-4 items-center ' onSubmit={handleFormSubmit}>
-                <label className='block'>
-                    Bio:
-                    
-                </label>
-                <textarea className='text-black rounded-lg border-y-2 border-x-2  border-blue-500 p-2' value={bio} onChange={(e) => setBio(e.target.value)} />
-                <label>
-                    Profile Picture:
-                    
-                    {profilePictureUrl && <img src={`http://localhost:8000`+profilePictureUrl} className='w-64 h-64 my-6 block mx-auto rounded-full' alt="Profile" />}
-                    <input type="file" accept="image/*" onChange={(e) => setProfilePicture(e.target.files[0])} />
-                </label>
-              
-            </form>
-<label className='text-red-500 text-center font-bold block tracking-wider mx-auto text-4xl'>Bio:
-<p className='text-center tracking-normal text-black font-semibold text-3xl '>{bio}</p></label>
 
-<h2 className='my-4 text-black text-2xl font-semibold text-center'>Questions:</h2>
-      <ul className='my-4 text-black text-2xl font-semibold text-center'>
+      <div className={`flex ${!isSidebarVisible?'justify-center':'justify-between'}` }>
+     <div>  {isSidebarVisible && <Sidebar1 dashboard={handledashboard} home={handlehome} signout={handlelogout} />}</div> 
+           
+{dashvisible?<div className='flex-1'><Founderdashboard xyz={authstate}/></div>:
+<div className='flex-1 justify-center items-center'>
+<h2 className='my-4 text-black text-2xl text-center font-bold '>Questions:</h2>
+      <ul className='my-4 text-black text-2xl font-bold text-center block mx-[20%]'>
         {questions.map((question, index) => (
          <><li className='my-2'  key={index}>{question}</li>
          <input className='text-black border-y-2 border-x-2  border-blue-500 rounded-lg'
@@ -174,13 +143,19 @@ window.location.replace("/")
           </> 
         ))}
       </ul>
+      <div className='flex justify-center gap-12  '>
 
-<div className='flex justify-center gap-12  '>
-<button onClick={handlelogout} className='rounded-lg w-28 p-2 my-3 bg-red-500 block '>Logout</button>
 <button className='rounded-lg p-2 my-3 w-28 bg-green-500 block 'onClick={handleFormSubmit}>Save</button>
 </div> 
+      </div>}
 
 
+
+
+
+
+
+</div>
 
 
 
