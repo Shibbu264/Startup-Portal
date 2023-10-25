@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+
 from auth1 import views
 from publicuser import views as publicuser_views
 from django.conf import settings
@@ -43,7 +44,8 @@ urlpatterns = [
         path('api/get-authenticated-user-info/', views.get_authenticated_user_info, name='get_authenticated_user_info'),
         path('api/get-questions/', views.get_questions, name='get_questions'),
          path('api/analyze-sentiment/', views.analyze_sentiment_api, name='analyze-sentiment-api'),
-         path('api/personalized-data/',views.personalized_data_api,name='personalized-data-api')
+         path('api/personalized-data/',views.personalized_data_api,name='personalized-data-api'),
+         path('api/google-login/', views.GoogleLoginAPIView.as_view(), name='google-login'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

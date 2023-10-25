@@ -5,6 +5,21 @@
 # models.py in your app
 from django.db import models
 from django.conf import settings
+
+from django.contrib.auth.models import AbstractUser
+
+
+class CustomUser(AbstractUser):
+    USER_TYPES = (
+        ('PUBLIC', 'PUBLIC'),
+        ('admin', 'Admin User'),
+        ('FOUNDERS', 'FOUNDERS'),
+        ('INVESTORS', 'INVESTORS'),
+    )
+    
+    user_type = models.CharField(max_length=10, choices=USER_TYPES, default='regular')
+
+
 class Question(models.Model):
     text = models.CharField(max_length=255)
 
@@ -22,4 +37,3 @@ class PersonalizedData(models.Model):
     def __str__(self):
         return self.user.username
     
-
