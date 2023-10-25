@@ -57,9 +57,16 @@ def login_view(request):
 @csrf_exempt
 @authentication_classes([TokenAuthentication])  # Use appropriate authentication method (Token, Session, etc.)
 @permission_classes([IsAuthenticated])
+@api_view(['POST'])
 def logout_view(request):
+#     session = Session.objects.get(session_key=request.session.session_key)
+
+# # Delete the session to log out the user
+# #    
+#     print (session)
+  if request.method == 'POST':  
     
-    
+    Session.objects.all().delete()
     logout(request)
   
     return JsonResponse({'message': 'logoutdone'})
@@ -207,7 +214,7 @@ class GoogleLoginAPIView(APIView):
         try:
             # Verify the Google access token
             id_info = id_token.verify_oauth2_token(access_token, requests.Request())
-
+            print (id_info)
             # Get user information from the verified token
             user_email = id_info.get('email')
             
@@ -234,4 +241,6 @@ class GoogleLoginAPIView(APIView):
 
         except Exception as e:
             # Handle other exceptions
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            Session.objects.all().delete()
+          
+            return Response({'error': str(e)+user_email}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

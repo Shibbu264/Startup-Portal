@@ -80,13 +80,14 @@ def login_view(request):
         return Response({'error': 'Method not allowed'}, status=405)
   # Allow any user to access this view (public endpoint)
 
-
+from oauth2_provider.models import AccessToken
+from django.contrib.sessions.models import Session
 @csrf_exempt
 @authentication_classes([TokenAuthentication])  # Use appropriate authentication method (Token, Session, etc.)
 @permission_classes([IsAuthenticated])
 def logout_view(request):
     
-    
+    Session.objects.all().delete()
     logout(request)
   
     return JsonResponse({'message': 'logoutdone'})

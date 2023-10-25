@@ -44,9 +44,11 @@ export const login = async (username, password) => {
         }
     }
 };
-export const logout = async () => {
-    try {
-        const response = await axios.post(`${API_BASE_URL}/api/logout/`);
+export const logout = async (accessToken) => {
+    try { 
+       
+       
+        const response = await axios.post(`${API_BASE_URL}/api/logout/`,{access_token:accessToken});
         return response.data;
     } catch (error) {
         throw error.response.data;
@@ -123,6 +125,7 @@ export const register = async (email,username, password) => {
 };
 export const logout1 = async () => {
     try {
+        
         const response = await axios.post(`${API_BASE_URL}/api/logout1/`);
         return response.data;
     } catch (error) {
