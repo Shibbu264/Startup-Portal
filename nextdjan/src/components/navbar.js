@@ -1,9 +1,15 @@
-export default function Navbar(){
+import { useState } from "react"
+
+
+
+
+export default function Navbar({ onSidebarToggle }){
 
 
 
 return(<nav className="bg-white    border-gray-200 dark:bg-gray-900 ">
 <div className="max-w-screen-xl   flex flex-wrap items-center justify-between mx-auto p-4">
+  <h1 className="text-xl cursor-pointer font-semibold" onClick={onSidebarToggle }>SIDEBAR</h1>
   <a href="https://flowbite.com/" className="flex items-center">
       <img src="https://flowbite.com/docs/images/logo.svg" className="h-8 mr-3" alt="Flowbite Logo" />
       <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">A S P</span>

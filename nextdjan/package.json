@@ -14,7 +14,8 @@
     "next": "13.5.5",
     "react": "^18",
     "react-dom": "^18",
-    "react-google-login": "^5.2.2"
+    "react-google-login": "^5.2.2",
+    "react-pro-sidebar": "^1.1.0-alpha.1"
   },
   "devDependencies": {
     "autoprefixer": "^10",

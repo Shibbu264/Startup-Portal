@@ -6,6 +6,7 @@ import { logout } from './api/auth';
 import { useRouter } from 'next/router'
 import Footer from '@/components/footer';
 import Navbar from '@/components/navbar';
+import Sidebar1 from '@/components/sidebar';
 const API_BASE_URL = 'http://localhost:8000'; 
 const PersonalizedDashboard = () => {
     let router= useRouter()
@@ -17,8 +18,9 @@ const PersonalizedDashboard = () => {
     const [authstate,setAuth]=useState(false);
     const handlelogout = async (e) => {
         e.preventDefault();
+       const accessToken=localStorage.getItem("authToken")
         try {
-          await logout().then((data)=> {
+          await logout(accessToken).then((data)=> {
     
 localStorage.clear()
 window.location.replace("/")
@@ -84,7 +86,11 @@ window.location.replace("/")
 
 
     }, []);   // Run the effect only once after the component mounts
+    const [isSidebarVisible, setSidebarVisibility] = useState(false);
 
+    const toggleSidebar = () => {
+      setSidebarVisibility(!isSidebarVisible);
+    };
     const handleFormSubmit = async (e) => {
         e.preventDefault();
     
@@ -128,7 +134,8 @@ window.location.replace("/")
     return (
         authstate?
         <>
-        <Navbar/>
+        <Navbar onSidebarToggle={toggleSidebar} />
+        {isSidebarVisible && <Sidebar1 />}
              <h1 className='text-3xl font-semibold text-black text-center my-4'>Welcome, {username}!</h1>
             <h2 className='text-3xl text-black font-bold text-center my-2'>Personalized Dashboard</h2>
            
