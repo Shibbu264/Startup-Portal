@@ -26,11 +26,12 @@ def register_view(request):
     if request.method == 'POST':
         username = request.data.get('username')
         password = request.data.get('password')
+        type=request.data.get('type')
         email=request.data.get('email')
         if username and password:
             User=get_user_model()
             if not User.objects.filter(username=username).exists():
-                user = User.objects.create_user(username=username, password=password,email=email,type="Public")
+                user = User.objects.create_user(username=username, password=password,email=email,user_type=type)
 
                 personalized_data = PersonalizedData1(user=user) 
                 personalized_data.save()
@@ -54,17 +55,19 @@ def login_view(request):
     if request.method == 'POST':
         username = request.data.get('username')
         password = request.data.get('password')
+        user_type=request.data.get('type')
         if username and password:
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 # User is authenticated, generate an authentication token
-                login(request,user)
-                token, created = Token.objects.get_or_create(user=user)
+                if user.user_type == user_type:
+                 login(request,user)
+                 token, created = Token.objects.get_or_create(user=user)
                 # Return the token and redirect URL in the response
-                response_data = {
+                 response_data = {
                     'token': token.key,
                     'redirect_url': 'http://localhost:3000/welcome',  # Replace with your desired redirect URL
-                }
+                 }
                 return Response(response_data)
             else:
                 # Invalid credentials, return an error response
@@ -138,7 +141,8 @@ def get_authenticated_user_info(request):
     user = request.user
     response_data = {
         'username': user.username,
-        'email': user.email,  # Add other user data as needed
+        'email': user.email,
+        'type':"public"     # Add other user data as needed
         # ...
     }
     return Response(response_data)

@@ -29,6 +29,7 @@ def login_view(request):
     if request.method == 'POST':
         username = request.data.get('username')
         password = request.data.get('password')
+        type=request.data.get('type')
         if username and password:
             user = authenticate(request, username=username, password=password)
             if user is not None:
@@ -75,10 +76,11 @@ def register_view(request):
         username = request.data.get('username')
         password = request.data.get('password')
         email=request.data.get('email')
+        type=request.data.get('type')
         if username and password:
             User=get_user_model()
             if not User.objects.filter(username=email).exists():
-                user = User.objects.create_user(username=email, password=password,email=email)
+                user = User.objects.create_user(username=email, password=password,email=email, user_type=type)
                 personalized_data = PersonalizedData(user=user) 
                 personalized_data.save()
                 personalized_dashboard_url = 'http://localhost:3000/fillform' 
@@ -91,6 +93,8 @@ def register_view(request):
                 return Response({'message': 'Username already in use'}, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response({'message': 'Invalid request'}, status=status.HTTP_400_BAD_REQUEST)
+        
+
 @api_view(['POST'])
 def save_personalized_data(request):
     if request.method == 'POST':
@@ -145,7 +149,8 @@ def get_authenticated_user_info(request):
     user = request.user
     response_data = {
         'username': user.username,
-        'email': user.email,  # Add other user data as needed
+        'email': user.email,
+           # Add other user data as needed
         # ...
     }
     return Response(response_data)
@@ -197,6 +202,7 @@ from django.utils import timezone
 class GoogleLoginAPIView(APIView):
     def post(self, request):
         access_token = request.data.get('access_token')
+        type=request.data.get('type')
         
         try:
             # Verify the Google access token
@@ -205,16 +211,16 @@ class GoogleLoginAPIView(APIView):
             # Get user information from the verified token
             user_email = id_info.get('email')
             
-            User = get_user_model()
+            User = get_user_model() 
             user = User.objects.filter(email=user_email).first()
             if not user:
               
                 # If user does not exist, create a new user
-                 user, created = User.objects.get_or_create(username=user_email, email=user_email)
-            
+                 user, created = User.objects.get_or_create(email=user_email, defaults={'username': user_email, 'user_type':type})
               
                 # Create or retrieve a token for the user (if you are using token authentication)
-            token, created = Token.objects.get_or_create(user=user)
+            if user.user_type == type:
+             token, created = Token.objects.get_or_create(user=user)
             
             # Return authentication token
             return Response({

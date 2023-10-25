@@ -9,6 +9,7 @@ export const login = async (username, password) => {
         const response = await axios.post(`${API_BASE_URL}/api/login/`, {
             username: username,
             password: password,
+            type:"FOUNDERS"
         },{
             headers: {
                
@@ -58,13 +59,14 @@ export const register = async (email,username, password) => {
           username: username,
           password: password,
           email:email,
+          type:"FOUNDERS"
       });
       const redirectUrl = response.data.redirect_url;
       const token = response.data.token;
       localStorage.setItem('authToken', token);
         if (redirectUrl) {
             // Redirect the user to the specified URL
-     
+     console.log(token)
             window.location.href = redirectUrl;
         } else {
             // Handle other responses or errors as needed
@@ -84,6 +86,7 @@ export const register = async (email,username, password) => {
         const response = await axios.post(`${API_BASE_URL}/api/login1/`, {
             username: username,
             password: password,
+            type:"PUBLIC"
         },{
             headers: {
                
@@ -133,6 +136,7 @@ export const register1 = async (email,username, password) => {
           username: username,
           password: password,
           email:email,
+          type:"PUBLIC"
       });
       const redirectUrl = response.data.redirect_url;
       const token = response.data.token;
@@ -149,44 +153,56 @@ export const register1 = async (email,username, password) => {
   }}
 
  export const  sendTokenToBackend = async (accessToken) => {
+    localStorage.clear()
     // Replace 'YOUR_BACKEND_API_ENDPOINT' with the actual endpoint URL
     fetch(`${API_BASE_URL}/api/google-login/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ access_token: accessToken }),
+      body: JSON.stringify({ access_token: accessToken,
+    type:"PUBLIC"
+    }),
     })
       .then((response) => response.json())
       .then((data) => {
         console.log(data)
-        localStorage.setItem('authToken', data.access_token)
-        window.location.href = "/welcome";
        
+        if(data.error){ alert("Auth error occured!") }
+        else{
+         localStorage.setItem('authToken', data.access_token)
+         window.location.replace("/welcome");
+        }
         
       })
       .catch((error) => {
         // Handle error
-        console.error('Error sending token to backend:', error);
+        alert('Error sending token to backend:', error);
       });
   };
 
   export const  sendTokenToBackend1 = async (accessToken) => {
+    localStorage.clear()
     // Replace 'YOUR_BACKEND_API_ENDPOINT' with the actual endpoint URL
     fetch(`${API_BASE_URL}/api/google-login/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ access_token: accessToken }),
+      body: JSON.stringify({ access_token: accessToken ,
+        type:"FOUNDERS"}),
     })
       .then((response) => response.json())
       .then((data) => {
+       
+       if(data.error){ alert("Auth error occured!") }
+       else{
         localStorage.setItem('authToken', data.access_token)
         window.location.replace("/fillform");
+       }
       })
       .catch((error) => {
         // Handle error
-        console.error('Error sending token to backend:', error);
+        alert('Error sending token to backend:', error);
       });
   };

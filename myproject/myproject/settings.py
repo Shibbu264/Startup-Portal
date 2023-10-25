@@ -179,3 +179,5 @@ SOCIAL_AUTH_REDIRECT_IS_HTTPS = True  # Ensure https for redirect URIs
 LOGIN_URL = 'http://localhost:3000/'
 LOGOUT_URL = 'your-logout-url'
 LOGIN_REDIRECT_URL = 'http://localhost:3000/welcome'
+
+AUTH_USER_MODEL="auth1.CustomUser"

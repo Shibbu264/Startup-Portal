@@ -6,6 +6,7 @@ import { login, register,register1,login1 ,sendTokenToBackend,sendTokenToBackend
 
 import { GoogleOAuthProvider,GoogleLogin } from '@react-oauth/google';
 import Footer from '@/components/footer';
+import { Card } from '@/components/card';
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
@@ -160,14 +161,14 @@ const [Username,setUsername]=useState('');
     <Navbar />
    
     {Switch?
-    <section className="bg-[#6a6af9] h-fit    ">
-    
-      <div className="flex flex-col translate-y-[30px]  items-center justify-start px-6 py-8 md:h-screen lg:py-0">
-        <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-          <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo"/>
-          AYUSH STARTUP PORTAL FOR PUBLIC
-        </a>
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+  
+   
+  <div className="sm:flex flex-row  items-center justify-center gap-[5%]     px-4 py-6 mt-6 mb-12 lg:py-0">
+   <Card/>
+       
+      w-[90%]   <div className=" block  rounded-lg shadow dark:border md:mt-0 w-[100%] xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        
+          
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
           <button className="text-green-500"  onClick={()=>{setswitch2(!Switch2)}}>Register as Startup Founder ?</button>
           <button className='text-xl block mx-auto font-semibold rounded-lg bg-[#6a6af9] px-3 py-1' onClick={()=>{setswitch(!Switch)}}>Login</button>
@@ -250,22 +251,19 @@ const [Username,setUsername]=useState('');
           </div>
         </div>
       </div>
-    </section>:
-    <section className="bg-gray-50 dark:bg-gray-900">
-<div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-    <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-        <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo"/>
-        AYUSH STARTUP PORTAL FOR PUBLIC
-    </a>
-    <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+:
+   
+<div className="sm:flex flex-row  items-center justify-center gap-[5%]    px-4 py-6 mt-6 mb-12 lg:py-0">
+   <Card/>
+    <div className="w-full bg-white rounded-lg shadow dark:borde w-[90%]r md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
         <button className="text-green-500"  onClick={()=>{setswitch2(!Switch2)}}>Register as Startup Founder ?</button>
         <button className='text-xl block mx-auto font-semibold rounded-lg bg-[#6a6af9] px-3 py-1' onClick={()=>{setswitch(!Switch)}}>Register</button>
-          <h1 className="text-xl justify-center flex font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+          <h1 className="text-xl justify-center flex font-bold leading-tight tracking-tight text-white md:text-2xl ">
               OR
             </h1>
            
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+            <h1 className="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl ">
                 Sign in to your account
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={handlelogin1}>
@@ -312,36 +310,34 @@ const [Username,setUsername]=useState('');
         </div>
     </div>
 </div>
-</section>}
+}
 
   </div>
   <Footer/>
-  </GoogleOAuthProvider> :
+  </GoogleOAuthProvider> 
+  :
   <GoogleOAuthProvider clientId='809328833359-t6inuf1bllcbrhvnro3a03f0pd0kovqu.apps.googleusercontent.com'>
     <div className='bg-white h-full p-0 m-0'>
     
       <Navbar />
      
       {Switch?
-      <section className="bg-gray-50 my-0 dark:bg-gray-900">
+     
       
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-            <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo"/>
-            AYUSH STARTUP PORTAL FOR STARTUPS
-          </a>
-          <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <div className="sm:flex flex-row items-center justify-center gap-[5%]    px-4 py-6 mt-6 mb-12 lg:py-0">
+         <Card/>
+          <div className="w-full bg-white rounded-lg shadow dark:border  w-[90%]md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <button className="text-green-500"  onClick={()=>{setswitch2(!Switch2)}}>Register as Public ?</button>
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+              
+              <form className="space-y-4 md:space-y-6" onSubmit={handleRegister}>
+              <button className='text-xl block mx-auto font-semibold rounded-lg bg-[#6a6af9] px-3 py-1' onClick={()=>{setswitch(!Switch)}}>Login</button>
+          <h1 className="text-xl justify-center flex font-bold leading-tight tracking-tight text-white md:text-2xl ">
+              OR
+            </h1>
+            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Create an account
               </h1>
-              <form className="space-y-4 md:space-y-6" onSubmit={handleRegister}>
-              <label class="relative inline-flex items-center cursor-pointer">
-  <input onClick={()=>{setswitch(!Switch)}} type="checkbox" value="" class="sr-only peer"/ >
-  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-  <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Toggle me</span>
-</label>
               <div>
                   <label htmlFor="Username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Email</label>
                   <input
@@ -393,10 +389,11 @@ const [Username,setUsername]=useState('');
       <GoogleLogin className='rounded-4xl cursor-pointer'
         clientId="809328833359-t6inuf1bllcbrhvnro3a03f0pd0kovqu.apps.googleusercontent.com"
         buttonText="Continue with Google"
+        text='Continue with Google'
       onClick={responseGoogle1}
       onSuccess={responseGoogle1}
       onFailure={responseGoogle1}
-       
+       useOneTap
       
         cookiePolicy={'single_host_origin'}
       ></GoogleLogin>
@@ -406,24 +403,21 @@ const [Username,setUsername]=useState('');
             </div>
           </div>
         </div>
-      </section>:
-      <section className="bg-gray-50 dark:bg-gray-900">
-  <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-      <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-          <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo"/>
-          AYUSH STARTUP PORTAL FOR STARTUPS  
-      </a>
-      <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+    :
+     
+  <div className="sm:flex flex-row  items-center justify-center gap-[5%]   px-4 py-6 mt-6 mb-12 lg:py-0">
+      <Card/>
+      <div className="w-full bg-white rounded-lg shadow dark:border w-[90%] md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+              
+              <form className="space-y-4 md:space-y-6" onSubmit={handlelogin}>
+              <button className='text-xl block mx-auto font-semibold rounded-lg bg-[#6a6af9] px-3 py-1' onClick={()=>{setswitch(!Switch)}}>Register</button>
+          <h1 className="text-xl justify-center flex font-bold leading-tight tracking-tight text-white md:text-2xl ">
+              OR
+            </h1>
+            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                   Sign in to your account
               </h1>
-              <form className="space-y-4 md:space-y-6" onSubmit={handlelogin}>
-              <label className="relative inline-flex items-center cursor-pointer">
-  <input onClick={()=>{setswitch(!Switch)}} type="checkbox" value="" className="sr-only peer" />
-  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-  <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Toggle me</span>
-</label>
                   <div>
                       <label for="Username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Email</label>
                       <input type="Username"   value={Username}
@@ -453,7 +447,7 @@ const [Username,setUsername]=useState('');
       onClick={responseGoogle1}
       onSuccess={responseGoogle1}
       onFailure={responseGoogle1}
-       
+       useOneTap
       
         cookiePolicy={'single_host_origin'}
       ></GoogleLogin>
@@ -464,7 +458,7 @@ const [Username,setUsername]=useState('');
           </div>
       </div>
   </div>
-</section>}
+}
 
     </div>
     <Footer/>
