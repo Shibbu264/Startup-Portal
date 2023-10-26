@@ -74,6 +74,7 @@ export default function Founderdashboard (xyz){
     
         const formData = new FormData();
         formData.append('bio', bio);
+        
         formData.append('profile_picture', profilePicture);
         
         // Assuming answers is an array containing the answers to questions
