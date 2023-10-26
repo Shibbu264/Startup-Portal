@@ -46,6 +46,7 @@ urlpatterns = [
          path('api/analyze-sentiment/', views.analyze_sentiment_api, name='analyze-sentiment-api'),
          path('api/personalized-data/',views.personalized_data_api,name='personalized-data-api'),
          path('api/google-login/', views.GoogleLoginAPIView.as_view(), name='google-login'),
+          path('api/google-login1/', publicuser_views.GoogleLoginAPIView.as_view(), name='google-login'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

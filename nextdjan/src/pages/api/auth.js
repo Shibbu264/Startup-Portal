@@ -158,7 +158,7 @@ export const register1 = async (email,username, password) => {
  export const  sendTokenToBackend = async (accessToken) => {
     localStorage.clear()
     // Replace 'YOUR_BACKEND_API_ENDPOINT' with the actual endpoint URL
-    fetch(`${API_BASE_URL}/api/google-login/`, {
+    fetch(`${API_BASE_URL}/api/google-login1/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -96,10 +96,11 @@ const [Username,setUsername]=useState('');
   };
 
   const responseGoogle = async (response) => {
-    console.log(response)
+ 
     if (response.credential) {
       const accessToken = response.credential;
-      console.log(response)
+      console.log(accessToken)
+    
       
       // Now you can send this accessToken to your Django backend
       try {
@@ -125,6 +126,7 @@ const [Username,setUsername]=useState('');
    
     if (response.credential) {
       const accessToken = response.credential;
+      console.log(accessToken)
       
       
       // Now you can send this accessToken to your Django backend
