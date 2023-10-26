@@ -147,4 +147,58 @@ def get_authenticated_user_info(request):
         # ...
     }
     return Response(response_data)
+from google.oauth2 import id_token
 
+from google.auth.transport import requests
+from django.contrib.sessions.models import Session
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.contrib.auth import get_user_model
+from oauth2_provider.models import AccessToken
+from django.utils import timezone
+class GoogleLoginAPIView(APIView):
+    def post(self, request):
+        access_token = request.data.get('access_token')
+        type=request.data.get('type')
+        
+        try:
+            # Verify the Google access token
+            id_info = id_token.verify_oauth2_token(access_token, requests.Request())
+            
+            # Get user information from the verified token
+            user_email = id_info.get('email')
+            
+            User = get_user_model() 
+            user = User.objects.filter(email=user_email).first()
+            if not user:
+              
+                # If user does not exist, create a new user
+                 user, created = User.objects.get_or_create(email=user_email, defaults={'username': user_email, 'user_type':'PUBLIC'})
+                 
+                # Create or retrieve a token for the user (if you are using token authentication)
+           
+            token, created = Token.objects.get_or_create(user=user)
+             
+
+        # Revoke the access token by deleting it
+            
+            # Return authentication token
+            return Response({
+                'message': 'Successfully authenticated',
+                'access_token': token.key,
+            }, status=status.HTTP_200_OK)
+
+        except ValueError:
+            # Invalid token
+          
+            Session.objects.all().delete()
+       
+            return Response({'error': 'Invalid access token'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        except Exception as e:
+            # Handle other exceptions
+            Session.objects.all().delete()
+          
+            return Response({'error': str(e)+user_email}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

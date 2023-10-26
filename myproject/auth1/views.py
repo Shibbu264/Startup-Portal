@@ -59,11 +59,7 @@ def login_view(request):
 @permission_classes([IsAuthenticated])
 @api_view(['POST'])
 def logout_view(request):
-#     session = Session.objects.get(session_key=request.session.session_key)
 
-# # Delete the session to log out the user
-# #    
-#     print (session)
   if request.method == 'POST':  
     
     Session.objects.all().delete()
@@ -214,7 +210,7 @@ class GoogleLoginAPIView(APIView):
         try:
             # Verify the Google access token
             id_info = id_token.verify_oauth2_token(access_token, requests.Request())
-            print (id_info)
+            
             # Get user information from the verified token
             user_email = id_info.get('email')
             
@@ -223,11 +219,14 @@ class GoogleLoginAPIView(APIView):
             if not user:
               
                 # If user does not exist, create a new user
-                 user, created = User.objects.get_or_create(email=user_email, defaults={'username': user_email, 'user_type':type})
-              
+                 user, created = User.objects.get_or_create(email=user_email, defaults={'username': user_email, 'user_type':'FOUNDERS'})
+                 
                 # Create or retrieve a token for the user (if you are using token authentication)
-            if user.user_type == type:
-             token, created = Token.objects.get_or_create(user=user)
+          
+            
+            token, created = Token.objects.get_or_create(user=user)
+             
+            
             
             # Return authentication token
             return Response({
@@ -237,10 +236,13 @@ class GoogleLoginAPIView(APIView):
 
         except ValueError:
             # Invalid token
+          
+            
+       
             return Response({'error': 'Invalid access token'}, status=status.HTTP_401_UNAUTHORIZED)
 
         except Exception as e:
             # Handle other exceptions
-            Session.objects.all().delete()
+            
           
             return Response({'error': str(e)+user_email}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
