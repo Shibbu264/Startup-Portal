@@ -27,11 +27,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
-    'https://sih2023-a928f7ygo-shibbu264-s-team.vercel.app'
-]
+# CORS_ALLOWED_ORIGINS = [
+#     'http://localhost:3000',
+#     'http://127.0.0.1:3000',
+#     'https://sih2023-a928f7ygo-shibbu264-s-team.vercel.app'
+#     'https://sih2023-mu.vercel.app/'
+# ]
 CORS_ALLOWED_CREDENTIALS =True
 CORS_ALLOWED_ALL_ORIGINS=True
 

@@ -162,6 +162,7 @@ export const register1 = async (email,username, password) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin':'https://sih2023-mu.vercel.app/'
       },
       body: JSON.stringify({ access_token: accessToken,
     type:"PUBLIC"
@@ -191,6 +192,7 @@ export const register1 = async (email,username, password) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin':'https://sih2023-mu.vercel.app/'
       },
       body: JSON.stringify({ access_token: accessToken ,
         type:"FOUNDERS"}),
