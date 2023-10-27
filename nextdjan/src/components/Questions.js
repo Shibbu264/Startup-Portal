@@ -58,7 +58,7 @@ return(
 <form onSubmit={handleFormSubmit1}>
       <ul className='my-4 text-black text-2xl font-bold text-center block mx-[20%]'>
         {questions.map((question, index) => (
-         <><li className='my-2'  key={index}>{index+1+". "+question}</li>
+         <div key={index}><li className='my-2'  key={index}>{index+1+". "+question}</li>
          <input className='text-black border-y-2 border-x-2  border-blue-500 rounded-lg required'
               type='text'
               key={index.toPrecision(5)}
@@ -70,7 +70,7 @@ return(
                 setAnswers(updatedAnswers);
               }}
             />
-          </> 
+          </div> 
         ))}
       </ul>
       <button className='rounded-lg p-2 my-3 w-28 bg-green-500 block mx-auto ' type="submit">Save</button>

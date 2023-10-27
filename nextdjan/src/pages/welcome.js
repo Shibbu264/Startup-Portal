@@ -184,7 +184,7 @@ window.location.replace("/")
                 <div>
                     <h1 className='text-white text-center font-bold text-4xl my-4'>STARTUP LISTS</h1>
       {personalizedData.map((data) => (
-        <div className='flex justify-center'>
+        <div key={data.id} className='flex justify-center'>
         <div key={data.id} className="w-[30%]  flex justify-center items-center bg-white border my-6 border-gray-200 border-x-2 border-y-2 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
              <img className='w-56 rounded-full h-56' src={`http://localhost:8000`+data.profile_picture} alt="Profile" />
          <div>
