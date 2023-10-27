@@ -15,4 +15,4 @@ class PersonalizedDataSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PersonalizedData
-        fields = ('id', 'user', 'bio', 'profile_picture','answers')  # Add more fields as needed
+        fields = ('id', 'user', 'bio', 'profile_picture')  # Add more fields as needed

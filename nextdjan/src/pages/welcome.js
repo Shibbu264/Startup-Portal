@@ -101,6 +101,26 @@ window.location.replace("/")
 
     }, []);   // Run the effect only once after the component mounts
 
+    const handlenotification = async (username) => {
+        try {
+            const authToken = localStorage.getItem('authToken');
+            await axios.post(`${API_BASE_URL}/api/create-notifications/`, {
+                'username':username,
+                'notification_text':' wants to connect with you !'
+            }, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Token ${authToken}`
+                },
+            });
+    
+            alert('Connection Request Sent!');
+        } catch (error) {
+            console.log(error)
+            alert('Error sending Request !', error);
+        }
+      }
+  
     const handleFormSubmit = async (e) => {
         e.preventDefault();
     
@@ -164,13 +184,21 @@ window.location.replace("/")
                 <div>
                     <h1 className='text-white text-center font-bold text-4xl my-4'>STARTUP LISTS</h1>
       {personalizedData.map((data) => (
-        <div key={data.id} className="max-w-sm block mx-auto bg-white border my-6 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <div className='flex justify-center'>
+        <div key={data.id} className="w-[30%]  flex justify-center items-center bg-white border my-6 border-gray-200 border-x-2 border-y-2 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+             <img className='w-56 rounded-full h-56' src={`http://localhost:8000`+data.profile_picture} alt="Profile" />
+         <div>
           <h2 className='my-2 text-center'>User ID: {data.user.id}</h2>
-        <div className='ml-3'>  <p>Username: {data.user.username}</p>
+        <div className='mx-3'>  <p>Username: {data.user.username}</p>
           <p>Email: {data.user.email}</p>
           <p>Bio: {data.bio}</p></div>
-          <img className='w-56 h-56' src={`http://localhost:8000`+data.profile_picture} alt="Profile" />
+          <button onClick={
+           ()=>{ handlenotification(data.user.username)}}  
+        
+         className='bg-blue-500 hover:bg-green-500 px-2 py-1 my-2 rounded-md'>Connect!</button>
+         </div>
          
+        </div>
         </div>
       ))}
     </div>

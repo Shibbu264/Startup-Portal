@@ -8,13 +8,15 @@ import Footer from '@/components/footer';
 import Navbar from '@/components/navbar';
 import Sidebar1 from '@/components/sidebar';
 import Founderdashboard from '@/components/founderdashboard';
+import Question from '@/components/Questions';
+import Notification from '@/components/notification';
 const API_BASE_URL = 'http://localhost:8000'; 
 const PersonalizedDashboard = () => {
     let router= useRouter()
   const[dashvisible,setdashvisibily]=useState(true)
   
 
-  
+    const[notification,setnotification]=useState(false)
     const [answers, setAnswers] = useState([""]);
     const [authstate,setAuth]=useState(false);
     const handlelogout = async (e) => {
@@ -69,13 +71,19 @@ window.location.replace("/")
 
     const toggleSidebar = () => {
       setSidebarVisibility(!isSidebarVisible);
+      setnotification(false)
     };
      const handledashboard = () => {
      setdashvisibily(true)
+     setnotification(false)
     };
     const handlehome =()=>{
         setdashvisibily(false)
+        setnotification(false)
     }
+    const handlenotification =()=>{
+      setnotification(true)
+  }
     const handleFormSubmit = async (e) => {
         e.preventDefault();
     
@@ -122,33 +130,13 @@ window.location.replace("/")
         <Navbar onSidebarToggle={toggleSidebar} />
 
       <div className={`flex ${!isSidebarVisible?'justify-center':'justify-between'}` }>
-     <div>  {isSidebarVisible && <Sidebar1 dashboard={handledashboard} home={handlehome} signout={handlelogout} />}</div> 
+     <div>  {isSidebarVisible && <Sidebar1 dashboard={handledashboard} home={handlehome} signout={handlelogout} notification={handlenotification} />}</div> 
            
-{dashvisible?<div className='flex-1'><Founderdashboard xyz={authstate}/></div>:
-<div className='flex-1 justify-center items-center'>
-<h2 className='my-4 text-black text-2xl text-center font-bold '>Questions:</h2>
-      <ul className='my-4 text-black text-2xl font-bold text-center block mx-[20%]'>
-        {questions.map((question, index) => (
-         <><li className='my-2'  key={index}>{question}</li>
-         <input className='text-black border-y-2 border-x-2  border-blue-500 rounded-lg'
-              type='text'
-              key={index.toPrecision(5)}
-              id={`question-${question.id}`}
-              value={answers[index]}
-              onChange={(e) => {
-                const updatedAnswers = [...answers];
-                updatedAnswers[index] = e.target.value;
-                setAnswers(updatedAnswers);
-              }}
-            />
-          </> 
-        ))}
-      </ul>
-      <div className='flex justify-center gap-12  '>
+{notification?
 
-<button className='rounded-lg p-2 my-3 w-28 bg-green-500 block 'onClick={handleFormSubmit}>Save</button>
-</div> 
-      </div>}
+  <Notification xyz={authstate}/>
+:dashvisible?<div className='flex-1'><Founderdashboard xyz={authstate}/></div>:
+<Question/>}
 
 
 

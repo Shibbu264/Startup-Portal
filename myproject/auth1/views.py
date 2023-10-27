@@ -107,13 +107,13 @@ def save_personalized_data(request):
             user = request.user
             bio = serializer.validated_data.get('bio', '')
             profile_picture = serializer.validated_data.get('profile_picture', None)
-            answers = serializer.validated_data.get('answers', [])
+           
 
         
             # Update or create personalized data for the user
             defaults = {
                 'bio': bio,
-                'answers': answers,
+                
             }
 
             # Only update the profile_picture field if it is not an empty string
@@ -130,6 +130,36 @@ def save_personalized_data(request):
             return Response(serializer.errors, status=400)
     else:
         return Response({'error': 'Invalid request method'}, status=400)
+    
+@api_view(['POST'])
+def save_answers(request):
+    if request.method == 'POST':
+        serializer = PersonalizedDataSerializer(data=request.data)
+        if serializer.is_valid():
+            # Get the current user from the request
+          
+            answers = json.loads(request.POST.get('answer'))
+            
+
+        
+            # Update or create personalized data for the user
+            defaults = {
+              
+                'answers': answers,
+            }
+            personalized_data, created = PersonalizedData.objects.update_or_create(
+                user=request.user,
+                defaults=defaults
+            )
+            print(answers) 
+            # Only update the profile_picture field if it is not an empty string
+         
+
+            return Response({'message': 'Answers saved successfully'})
+        else:
+            return Response(serializer.errors, status=400)
+    else:
+        return Response({'error': 'Invalid request method'}, status=400)    
         
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication],)  # Use appropriate authentication method (Token, Session, etc.)
@@ -246,3 +276,66 @@ class GoogleLoginAPIView(APIView):
             
           
             return Response({'error': str(e)+user_email}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+from .models import Notification
+@api_view(['POST'])
+def get_notifications(request):
+    try:
+        username = request.user
+         # Get username from request data
+        user_notifications = Notification.objects.filter(user__username=username)
+       
+        notifications_data = [{'text': notification.text} for notification in user_notifications]
+        
+        return Response({'notifications': notifications_data})
+    except Exception as e:
+        return Response({'error': str(e)})
+
+@api_view(['POST'])
+def create_notification(request):
+    if request.method == 'POST':
+        username = request.data.get('username')
+        user1=request.user.username  
+
+        notification_text = user1+request.data.get('notification_text')
+       
+        try:
+            User=get_user_model()
+            
+            user_instance = User.objects.get(username=username)
+            
+            notification = Notification.objects.create(user=user_instance, text=notification_text)
+           
+            return Response({'message': 'Notification created successfully!'}, status=status.HTTP_201_CREATED)
+       
+       
+       
+        except User.DoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    else:
+        return Response({'error': 'Invalid request method'}, status=status.HTTP_400_BAD_REQUEST)    
+    
+from django.core.exceptions import MultipleObjectsReturned
+
+@api_view(['DELETE'])
+def delete_notification(request):
+    notification_text = request.data.get('text')  # Get notification text from request data
+    
+    try:
+        # Attempt to get a single notification with the specified text owned by the user
+        notification = Notification.objects.get(text=notification_text, user=request.user)
+        notification.delete()
+        
+        return Response({'message': 'Notification deleted successfully.'}, status=status.HTTP_204_NO_CONTENT)
+    
+    except Notification.DoesNotExist:
+        return Response({'message': 'Notification not found.'}, status=status.HTTP_404_NOT_FOUND)
+    
+    except MultipleObjectsReturned:
+        # Handle the case where multiple notifications with the same text exist
+        # You can choose how to handle this situation, for example, delete the first one found
+        notification = Notification.objects.filter(text=notification_text, user=request.user).first()
+        notification.delete()
+        
+        return Response({'message': 'Multiple notifications found. One deleted successfully.'}, status=status.HTTP_204_NO_CONTENT)
