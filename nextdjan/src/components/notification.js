@@ -10,6 +10,7 @@ export default function Notification(xyz  ){
     const API_BASE_URL = 'http://localhost:8000'; 
     const[notifications,setnotification]=useState([])
     const[loading,setloading]=useState(false)
+    const[tick,settick]=useState(true)
     const handleclose = async (notificationText, index) => {
         try {
             const authToken = localStorage.getItem('authToken');
@@ -32,7 +33,30 @@ export default function Notification(xyz  ){
             alert('Error deleting notification:', error);
             // Handle error if deletion fails
         }
-    };    
+    };  
+    const handletick = async (username, index) => {
+        try {
+            const authToken = localStorage.getItem('authToken');
+            await axios.post(`${API_BASE_URL}/api/tick-notification/`,{
+                'username': username
+            }, {
+                headers: {
+                    'Authorization': `Token ${authToken}`
+                },
+                
+            }).then((response)=>{
+                console.log(response.data)
+            })
+    settick(false)
+  
+            // Remove the notification from the array when successfully deleted
+          
+        } catch (error) {
+            setloading(true)
+            alert('Error accepting requests:', error);
+            // Handle error if deletion fails
+        }
+    };   
 useEffect(()=>{
 
     const fetchNotifications = async (username) => {
@@ -76,7 +100,7 @@ return(
 
 
 {loading?<div className=" h-screen">
-            {(notifications).map((notification,index) => (
+            {notifications.map((notification,index) => (
                 <div key={index} className="flex items-center p-4 border-y-2 mx-1 rounded-md border-white text-blue-800 bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
                     <svg className="flex-shrink-0 w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
@@ -85,10 +109,12 @@ return(
                     <div className="ml-3 text-sm font-medium">
                         {notification.text}
                     </div>
-                    <div className="flex justify-end">
-                    <button className="ml-8 w-16 bg-green-500 rounded-lg px-2 text-lg text-white py-1">Tick</button>
-                    <button className="mx-4 w-16 bg-red-500 rounded-lg px-2 text-lg text-white py-1">Cross</button>
-                   </div>
+                 {tick?   <div className="flex justify-end">
+                    <button key={index} onClick={()=>{handletick(notification.sender,index).then(()=>{setTimeout(() => {handleclose(notification.text,index).then(settick(true))
+                        
+                    }, 1000);})}} className="ml-8 w-16 bg-green-500 rounded-lg px-2 text-lg text-white py-1">Tick</button>
+                    <button key={index} className="mx-4 w-16 bg-red-500 rounded-lg px-2 text-lg text-white py-1">Cross</button>
+                   </div>:<h1 key={index} className="flex justify-end ml-[10%] text-green-500">Accepted !</h1> }
                     <button onClick={()=>{handleclose(notification.text,index);setloading(false)}} type="button" class="ml-auto -mx-1.5 -my-1.5 bg-blue-50 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-blue-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-1" aria-label="Close">
       <span class="sr-only">Close</span>
       <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">

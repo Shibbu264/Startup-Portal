@@ -51,6 +51,9 @@ urlpatterns = [
            path('api/notifications/', views.get_notifications, name='get_notifications'),
             path('api/create-notifications/', views.create_notification, name='create_notifications'),
              path('api/delete-notification/', views.delete_notification, name='delete_notification'),
+              path('api/tick-notification/', views.tick_notification, name='tick_notification'),
+               path('api/get-founders/', views.get_founders, name='ff'),
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

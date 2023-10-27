@@ -284,7 +284,7 @@ def get_notifications(request):
          # Get username from request data
         user_notifications = Notification.objects.filter(user__username=username)
        
-        notifications_data = [{'text': notification.text} for notification in user_notifications]
+        notifications_data = [{'text': notification.text,'sender':notification.sender} for notification in user_notifications]
         
         return Response({'notifications': notifications_data})
     except Exception as e:
@@ -303,7 +303,7 @@ def create_notification(request):
             
             user_instance = User.objects.get(username=username)
             
-            notification = Notification.objects.create(user=user_instance, text=notification_text)
+            notification = Notification.objects.create(user=user_instance, text=notification_text,sender=user1)
            
             return Response({'message': 'Notification created successfully!'}, status=status.HTTP_201_CREATED)
        
@@ -339,3 +339,54 @@ def delete_notification(request):
         notification.delete()
         
         return Response({'message': 'Multiple notifications found. One deleted successfully.'}, status=status.HTTP_204_NO_CONTENT)
+from publicuser.models import PersonalizedData1
+
+@api_view(['POST'])
+def tick_notification(request):
+    if request.method == 'POST':
+        User = get_user_model()
+        username = request.data.get('username')
+        
+        try:
+            # Get the user object based on the provided username
+            user = User.objects.get(username=username)
+            
+            # Get PersonalizedData1 object associated with the user
+            personalized_data1 = PersonalizedData1.objects.get(user=user)
+            
+            # Add the current user to the founders list in PersonalizedData1
+            founders_list = personalized_data1.founders
+            founders_list.append(request.user.username)
+            personalized_data1.founders = founders_list
+            personalized_data1.save()
+            
+            # Get PersonalizedData object associated with the current user
+            personalized_data = PersonalizedData.objects.get(user=request.user)
+            
+            # Add the new founder to the investors list in PersonalizedData
+            investors_list = personalized_data.investors
+            investors_list.append(personalized_data1.user.username)
+            personalized_data.investors = investors_list
+            personalized_data.save()
+
+            return Response({"message": "User added to founders and investors successfully."})
+
+        except PersonalizedData1.DoesNotExist:
+            return Response({'message': 'Personalized data not found for the user.'}, status=404)
+
+
+
+from .serializers import  PersonalizedDataSerializer as PersonalizedData1Serializer  
+@api_view(['GET'])
+def get_founders(request):
+    if request.method == 'GET':
+        try:
+            # Assuming you have a user object, you can get the associated PersonalizedData1 instance
+            personalized_data1 = PersonalizedData.objects.get(user=request.user)
+
+            # Serialize the founders list and send it in the response
+            serializer = PersonalizedData1Serializer(personalized_data1)
+            return Response(serializer.data)
+
+        except PersonalizedData1.DoesNotExist:
+            return Response({'message': 'Personalized data not found for the user.'}, status=400)        
