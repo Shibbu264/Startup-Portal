@@ -232,6 +232,7 @@ from rest_framework import status
 from django.contrib.auth import get_user_model
 from oauth2_provider.models import AccessToken
 from django.utils import timezone
+
 class GoogleLoginAPIView(APIView):
     def post(self, request):
         access_token = request.data.get('access_token')
