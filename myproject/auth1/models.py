@@ -5,10 +5,17 @@
 # models.py in your app
 from django.db import models
 from django.conf import settings
+from django.contrib.auth import get_user_model
 
 from django.contrib.auth.models import AbstractUser
 
+class Notification(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    text = models.CharField(max_length=255)
+    sender=models.CharField(max_length=255,null=True,default="Jaadu")
 
+    def __str__(self):
+        return self.text
 class CustomUser(AbstractUser):
     USER_TYPES = (
         ('PUBLIC', 'PUBLIC'),
@@ -27,6 +34,7 @@ class Question(models.Model):
         return self.text
 class PersonalizedData(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    investors = models.JSONField(default=list)
   
     bio = models.TextField(blank=True, null=True)
     profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
