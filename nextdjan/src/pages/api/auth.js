@@ -23,7 +23,7 @@ export const login = async (username, password) => {
           if (redirectUrl) {
               // Redirect the user to the specified URL
        
-              window.location.href = redirectUrl;
+              window.location.replace='/fillform';
           } else {
               // Handle other responses or errors as needed
           }
@@ -69,7 +69,7 @@ export const register = async (email,username, password) => {
         if (redirectUrl) {
             // Redirect the user to the specified URL
      console.log(token)
-            window.location.href = redirectUrl;
+            window.location.replace='/fillform';
         } else {
             // Handle other responses or errors as needed
         }
@@ -102,7 +102,7 @@ export const register = async (email,username, password) => {
           if (redirectUrl) {
               // Redirect the user to the specified URL
        
-              window.location.href = redirectUrl;
+              window.location.replace = '/welcome';
           } else {
               // Handle other responses or errors as needed
           }
@@ -147,7 +147,7 @@ export const register1 = async (email,username, password) => {
         if (redirectUrl) {
             // Redirect the user to the specified URL
      
-            window.location.href = redirectUrl;
+            window.location.replace = '/welcome';
         } else {
             // Handle other responses or errors as needed
         }
