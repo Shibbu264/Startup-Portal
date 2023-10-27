@@ -6,7 +6,7 @@ const API_BASE_URL = 'http://localhost:8000';
 export const login = async (username, password) => {
    
     try {
-        const response = await axios.post(`${API_BASE_URL}/api/login/`, {
+        const response = await axios.post(`api/login/`, {
             username: username,
             password: password,
             type:"FOUNDERS"
@@ -23,7 +23,7 @@ export const login = async (username, password) => {
           if (redirectUrl) {
               // Redirect the user to the specified URL
        
-              window.location.replace='/fillform';
+              window.location.replace('/fillform');
           } else {
               // Handle other responses or errors as needed
           }
@@ -48,7 +48,7 @@ export const logout = async (accessToken) => {
     try { 
        
        
-        const response = await axios.post(`${API_BASE_URL}/api/logout/`,{access_token:accessToken});
+        const response = await axios.post(`/api/logout/`,{access_token:accessToken});
         return response.data;
     } catch (error) {
         throw error.response.data;
@@ -57,7 +57,7 @@ export const logout = async (accessToken) => {
 
 export const register = async (email,username, password) => {
   try {
-      const response = await axios.post(`${API_BASE_URL}/api/register/`, {
+      const response = await axios.post(`/api/register/`, {
           username: username,
           password: password,
           email:email,
@@ -69,7 +69,7 @@ export const register = async (email,username, password) => {
         if (redirectUrl) {
             // Redirect the user to the specified URL
      console.log(token)
-            window.location.replace='/fillform';
+     window.location.replace('/fillform');
         } else {
             // Handle other responses or errors as needed
         }
@@ -85,7 +85,7 @@ export const register = async (email,username, password) => {
   export const login1 = async (username, password) => {
    
     try {
-        const response = await axios.post(`${API_BASE_URL}/api/login1/`, {
+        const response = await axios.post(`/api/login1/`, {
             username: username,
             password: password,
             type:"PUBLIC"
@@ -102,7 +102,7 @@ export const register = async (email,username, password) => {
           if (redirectUrl) {
               // Redirect the user to the specified URL
        
-              window.location.replace = '/welcome';
+              window.location.replace ('/welcome');
           } else {
               // Handle other responses or errors as needed
           }
@@ -126,7 +126,7 @@ export const register = async (email,username, password) => {
 export const logout1 = async () => {
     try {
         
-        const response = await axios.post(`${API_BASE_URL}/api/logout1/`);
+        const response = await axios.post(`/api/logout1/`);
         return response.data;
     } catch (error) {
         throw error.response.data;
@@ -135,7 +135,7 @@ export const logout1 = async () => {
 
 export const register1 = async (email,username, password) => {
   try {
-      const response = await axios.post(`${API_BASE_URL}/api/register1/`, {
+      const response = await axios.post(`/api/register1/`, {
           username: username,
           password: password,
           email:email,
@@ -147,7 +147,8 @@ export const register1 = async (email,username, password) => {
         if (redirectUrl) {
             // Redirect the user to the specified URL
      
-            window.location.replace = '/welcome';
+         
+            window.location.replace ('/welcome');
         } else {
             // Handle other responses or errors as needed
         }
@@ -158,11 +159,11 @@ export const register1 = async (email,username, password) => {
  export const  sendTokenToBackend = async (accessToken) => {
     localStorage.clear()
     // Replace 'YOUR_BACKEND_API_ENDPOINT' with the actual endpoint URL
-    fetch(`${API_BASE_URL}/api/google-login1/`, {
+    fetch(`/api/google-login1/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin':'https://sih2023-mu.vercel.app'
+        
       },
       body: JSON.stringify({ access_token: accessToken,
     type:"PUBLIC"
@@ -188,11 +189,10 @@ export const register1 = async (email,username, password) => {
   export const  sendTokenToBackend1 = async (accessToken) => {
     localStorage.clear()
     // Replace 'YOUR_BACKEND_API_ENDPOINT' with the actual endpoint URL
-    fetch(`${API_BASE_URL}/api/google-login/`, {
+    fetch(`/api/google-login/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin':['https://sih2023-mu.vercel.app','https://localhost:8000']
       },
       body: JSON.stringify({ access_token: accessToken ,
         type:"FOUNDERS"}),

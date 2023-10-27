@@ -25,18 +25,18 @@ SECRET_KEY = 'django-insecure-+s@vg4=#6hst9r&7z20^_73z*!r-lm43k6%hvp(tr4v#0^49le
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://sih2023-mu.vercel.app']
+ALLOWED_HOSTS = ['https://sih2023-mu.vercel.app','127.0.0.1', 'localhost',]
 
-# CORS_ALLOWED_ORIGINS = [
-#     'http://localhost:3000',
-#     'http://127.0.0.1:3000',
-#     'https://sih2023-a928f7ygo-shibbu264-s-team.vercel.app'
-#     'https://sih2023-mu.vercel.app/'
-# ]
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'https://sih2023-a928f7ygo-shibbu264-s-team.vercel.app'
+    'https://sih2023-mu.vercel.app'
+]
 CORS_ALLOWED_CREDENTIALS =True
-CORS_ALLOWED_ALL_ORIGINS=True
+# CORS_ALLOWED_ALL_ORIGINS=True
 
-CSRF_TRUSTED_ORIGINS = ['https://sih2023-mu.vercel.app']
+# CSRF_TRUSTED_ORIGINS = ['https://sih2023-mu.vercel.app']
 # Application definition
 
 INSTALLED_APPS = [
