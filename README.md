@@ -7,6 +7,6 @@ then python manage.py runserver
 
 in nextJS
 cd nextdjan
-npm install
+npm install --force
 npm run dev
 
