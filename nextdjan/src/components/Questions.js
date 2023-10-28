@@ -56,9 +56,9 @@ return(
 <div className='flex-1 justify-center items-center'>
 <h2 className='my-4 text-black text-2xl text-center font-bold '>Questions:</h2>
 <form onSubmit={handleFormSubmit1}>
-      <ul className='my-4 text-black text-2xl font-bold text-center block mx-[20%]'>
+      <ul className='my-4 text-black  text-2xl font-bold text-center block mx-[20%]'>
         {questions.map((question, index) => (
-         <div key={index}><li className='my-2'  key={index}>{index+1+". "+question}</li>
+         <div className="max-w-lg  sm:w-fit my-2 block mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-white dark:border-gray-200" key={index}><li className='my-2 '  key={index}>{index+1+". "+question}</li>
          <input className='text-black border-y-2 border-x-2  border-blue-500 rounded-lg required'
               type='text'
               key={index.toPrecision(5)}

@@ -16,6 +16,16 @@ class Notification(models.Model):
 
     def __str__(self):
         return self.text
+    
+
+class Events(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    text = models.CharField(max_length=255)
+    date=models.CharField(max_length=255)
+    
+
+    def __str__(self):
+        return self.text    
 class CustomUser(AbstractUser):
     USER_TYPES = (
         ('PUBLIC', 'PUBLIC'),
@@ -35,6 +45,8 @@ class Question(models.Model):
 class PersonalizedData(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     investors = models.JSONField(default=list)
+    name=models.CharField(max_length=20,default="Shivanshu Ranjan")
+    phonenumber=models.CharField(max_length=12,default="8210892090")
   
     bio = models.TextField(blank=True, null=True)
     profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)

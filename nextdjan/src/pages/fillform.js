@@ -67,7 +67,7 @@ window.location.replace("/")
 
 
     }, []);   // Run the effect only once after the component mounts
-    const [isSidebarVisible, setSidebarVisibility] = useState(false);
+    const [isSidebarVisible, setSidebarVisibility] = useState(true);
 
     const toggleSidebar = () => {
       setSidebarVisibility(!isSidebarVisible);
@@ -129,8 +129,8 @@ window.location.replace("/")
         <>
         <Navbar onSidebarToggle={toggleSidebar} />
 
-      <div className={`flex ${!isSidebarVisible?'justify-center':'justify-between'}` }>
-     <div>  {isSidebarVisible && <Sidebar1 dashboard={handledashboard} home={handlehome} signout={handlelogout} notification={handlenotification} />}</div> 
+      <div className={`flex h-fit ${!isSidebarVisible?'justify-center ':'justify-between'}` }>
+      <div className={`sidebar-container h-full ${isSidebarVisible ? 'sidebar-visible' : ''}`}>  {isSidebarVisible && <Sidebar1 dashboard={handledashboard} home={handlehome} signout={handlelogout} notification={handlenotification} />}</div> 
            
 {notification?
 

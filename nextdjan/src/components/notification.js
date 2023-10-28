@@ -79,7 +79,7 @@ useEffect(()=>{
         setloading(true)
        setnotification(notifications.reverse())
         // Handle notifications data here
-      });
+      }).then(console.log(notifications));
 
 
 
@@ -100,7 +100,7 @@ return(
 
 
 {loading?<div className=" h-screen">
-            {notifications.map((notification,index) => (
+            {notifications.length!=0?   notifications.map((notification,index) => (
                 <div key={index} className="flex items-center p-4 border-y-2 mx-1 rounded-md border-white text-blue-800 bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
                     <svg className="flex-shrink-0 w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
@@ -123,7 +123,7 @@ return(
   </button>
                 </div>
 
-            ))}
+            )): <h1 className="my-4 text-green-500 text-2xl text-center font-semibold">There are no new notifications !</h1>}
         </div>:
         <div className="flex justify-center items-center my-12">
     <svg aria-hidden="true" class="inline w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">

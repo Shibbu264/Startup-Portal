@@ -23,7 +23,7 @@ export const login = async (username, password) => {
           if (redirectUrl) {
               // Redirect the user to the specified URL
        
-              window.location.href = redirectUrl;
+              window.location.replace('/fillform');
           } else {
               // Handle other responses or errors as needed
           }
@@ -39,7 +39,7 @@ export const login = async (username, password) => {
             throw 'No response received';  // Rethrow a custom error message
         } else {
             // Something happened in setting up the request that triggered an error
-            console.error('Error message:', error.message);
+            alert('Error message:', error.message);
             throw error.message;  // Rethrow the error message
         }
     }
@@ -51,7 +51,7 @@ export const logout = async (accessToken) => {
         const response = await axios.post(`${API_BASE_URL}/api/logout/`,{access_token:accessToken});
         return response.data;
     } catch (error) {
-        throw error.response.data;
+        alert( error.response.data)
     }
 };
 
@@ -69,12 +69,12 @@ export const register = async (email,username, password) => {
         if (redirectUrl) {
             // Redirect the user to the specified URL
      console.log(token)
-            window.location.href = redirectUrl;
+     window.location.replace('/fillform');
         } else {
             // Handle other responses or errors as needed
         }
   } catch (error) {
-      throw error.response.data;
+    alert( error.response.data)
   }}
 
 
@@ -102,7 +102,7 @@ export const register = async (email,username, password) => {
           if (redirectUrl) {
               // Redirect the user to the specified URL
        
-              window.location.href = redirectUrl;
+              window.location.replace('/welcome');
           } else {
               // Handle other responses or errors as needed
           }
@@ -118,7 +118,7 @@ export const register = async (email,username, password) => {
             throw 'No response received';  // Rethrow a custom error message
         } else {
             // Something happened in setting up the request that triggered an error
-            console.error('Error message:', error.message);
+            alert('Error message:', error.message);
             throw error.message;  // Rethrow the error message
         }
     }
@@ -129,7 +129,7 @@ export const logout1 = async () => {
         const response = await axios.post(`${API_BASE_URL}/api/logout1/`);
         return response.data;
     } catch (error) {
-        throw error.response.data;
+        alert( error.response.data)
     }
 };
 
@@ -147,12 +147,12 @@ export const register1 = async (email,username, password) => {
         if (redirectUrl) {
             // Redirect the user to the specified URL
      
-            window.location.href = redirectUrl;
+            window.location.replace('/welcome');
         } else {
             // Handle other responses or errors as needed
         }
   } catch (error) {
-      throw error.response.data;
+      alert( error.response.data.message)
   }}
 
  export const  sendTokenToBackend = async (accessToken) => {

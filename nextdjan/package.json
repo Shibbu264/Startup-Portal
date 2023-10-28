@@ -13,9 +13,13 @@
     "axios": "^1.5.1",
     "next": "13.5.5",
     "react": "^18",
+    "react-calendar": "^4.6.1",
+    "react-datepicker": "^4.21.0",
     "react-dom": "^18",
     "react-google-login": "^5.2.2",
-    "react-pro-sidebar": "^1.1.0-alpha.1"
+    "react-pro-sidebar": "^1.1.0-alpha.1",
+    "stream-chat": "^8.13.1",
+    "stream-chat-react": "^10.15.0"
   },
   "devDependencies": {
     "autoprefixer": "^10",
