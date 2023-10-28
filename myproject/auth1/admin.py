@@ -23,8 +23,10 @@ class CustomUserAdmin(UserAdmin):
     list_filter = ('user_type',)  # Add filter by user_type
     fieldsets = (
         (None, {'fields': ('username', 'email', 'password')}),
-        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'user_type')}),
-        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'user_type','name','phonenumber')}),
+        ('Important dates', {'fields': ('last_login', 'date_joined')},
+        
+         ),
     )
     # Add other customizations as needed...
 

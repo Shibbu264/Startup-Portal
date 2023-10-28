@@ -107,12 +107,17 @@ def save_personalized_data(request):
             user = request.user
             bio = serializer.validated_data.get('bio', '')
             profile_picture = serializer.validated_data.get('profile_picture', None)
-           
+            name=serializer.validated_data.get('name', None)
 
-        
+            phonenumber=serializer.validated_data.get('phonenumber', None)
+
+           
+            
             # Update or create personalized data for the user
             defaults = {
                 'bio': bio,
+                'name':name,
+                'phonenumber':phonenumber
                 
             }
 
@@ -277,6 +282,23 @@ class GoogleLoginAPIView(APIView):
           
             return Response({'error': str(e)+user_email}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 from .models import Notification
+from .models import Events
+@api_view(['GET'])
+def get_events(request):
+    try:
+        username = request.user
+         # Get username from request data
+        events = Events.objects.filter(user__username=username)
+          
+        print(events)
+        
+        event_data = [{'events': event.text,'date':event.date} for event in events]
+        print(event_data)
+        return Response({'events': event_data})
+    except Exception as e:
+        return Response({'error': str(e)})
+    
+
 @api_view(['POST'])
 def get_notifications(request):
     try:
@@ -288,7 +310,7 @@ def get_notifications(request):
         
         return Response({'notifications': notifications_data})
     except Exception as e:
-        return Response({'error': str(e)})
+        return Response({'error': str(e)})    
 
 @api_view(['POST'])
 def create_notification(request):
@@ -315,7 +337,45 @@ def create_notification(request):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     else:
         return Response({'error': 'Invalid request method'}, status=status.HTTP_400_BAD_REQUEST)    
+from django.utils import timezone
+from datetime import datetime,timedelta
+@api_view(['POST'])
+def create_events(request):
+    if request.method == 'POST':
+        events = request.data.get('events')
+        date = request.data.get('date')
+        user1=request.user  
+
+        event_date_time = datetime.fromisoformat(date[:-1])
+
+
+        adjusted_date_time = event_date_time + timedelta(hours=5, minutes=30)
+
+# Format the adjusted datetime object
+        formatted_date_time = adjusted_date_time.strftime('%d %B %I:%M %p')
+        print(formatted_date_time)
+       
+        try:
+            User=get_user_model()
+            
+            user_instance = User.objects.get(username=user1)
+            
+            event = Events.objects.create(user=user_instance, text=events,date=formatted_date_time)
+            
+            return Response({'message': 'Events created successfully!'}, status=status.HTTP_201_CREATED)
+       
+       
+       
+        except User.DoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    else:
+        return Response({'error': 'Invalid request method'}, status=status.HTTP_400_BAD_REQUEST)    
     
+
+
+
 from django.core.exceptions import MultipleObjectsReturned
 
 @api_view(['DELETE'])
@@ -337,6 +397,27 @@ def delete_notification(request):
         # You can choose how to handle this situation, for example, delete the first one found
         notification = Notification.objects.filter(text=notification_text, user=request.user).first()
         notification.delete()
+        
+        return Response({'message': 'Multiple notifications found. One deleted successfully.'}, status=status.HTTP_204_NO_CONTENT)
+@api_view(['DELETE'])
+def delete_events(request):
+    event = request.data.get('event')  # Get notification text from request data
+    
+    try:
+        # Attempt to get a single notification with the specified text owned by the user
+        event1 = Events.objects.get(text=event, user=request.user)
+        event1.delete()
+        
+        return Response({'message': 'Notification deleted successfully.'}, status=status.HTTP_204_NO_CONTENT)
+    
+    except Notification.DoesNotExist:
+        return Response({'message': 'Notification not found.'}, status=status.HTTP_404_NOT_FOUND)
+    
+    except MultipleObjectsReturned:
+        # Handle the case where multiple notifications with the same text exist
+        # You can choose how to handle this situation, for example, delete the first one found
+        event1 = Events.objects.filter(text=event, user=request.user).first()
+        event1.delete()
         
         return Response({'message': 'Multiple notifications found. One deleted successfully.'}, status=status.HTTP_204_NO_CONTENT)
 from publicuser.models import PersonalizedData1

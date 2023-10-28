@@ -29,12 +29,13 @@ ALLOWED_HOSTS = []
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
-    'http://127.0.0.1:3000'
+    'http://127.0.0.1:3000',
+    'https://sih2023-mu.vercel.app'
 ]
 CORS_ALLOWED_CREDENTIALS =True
 CORS_ALLOWED_ALL_ORIGINS=True
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000','https://sih2023-mu.vercel.app']
 # Application definition
 
 INSTALLED_APPS = [
@@ -49,7 +50,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'auth1',
-   
+    'corsheaders',
     'rest_framework.authtoken',
     'publicuser',
     'oauth2_provider',

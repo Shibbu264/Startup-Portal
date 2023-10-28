@@ -53,3 +53,47 @@ body {
     50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 0,100% 0,100% 0)}
     75%, 100%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
 }
+.str-chat__channel-list {
+  width: 30%;
+}
+.str-chat__channel {
+  width: 100%;
+}
+.str-chat__thread {
+  width: 45%;
+}
+.chat{
+  background-image: url("https://freepngimg.com/download/chat/1-2-chat-png-image.png");
+}
+.sidebar-container {
+ 
+  top: 0;
+  
+  height: 100vh;
+  background-color: #fff; /* Sidebar background color */
+  transform: translateX(-100%); /* Move Sidebar off-screen initially */
+  transition: transform 0.3s ease; /* Apply sliding transition to the transform property */
+  z-index: 1000;
+}
+
+.sidebar-visible {
+  transform: translateX(0);
+ /* Bring the Sidebar in view when it's visible */
+}
+.btn {
+  @apply font-bold py-2 px-4 rounded;
+}
+.btn-blue {
+  @apply bg-blue-500 text-white;
+}
+.btn-blue:hover {
+  @apply bg-blue-700;
+}
+.form-control{
+  color: #FF3D00;
+  font-weight: 600;
+  padding: 1px;
+  display: block;
+  margin: auto;
+  border: 1px solid black ;
+}

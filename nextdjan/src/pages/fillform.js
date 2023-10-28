@@ -10,7 +10,7 @@ import Sidebar1 from '@/components/sidebar';
 import Founderdashboard from '@/components/founderdashboard';
 import Question from '@/components/Questions';
 import Notification from '@/components/notification';
-const API_BASE_URL = 'http://localhost:8000'; 
+const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:8000"; 
 const PersonalizedDashboard = () => {
     let router= useRouter()
   const[dashvisible,setdashvisibily]=useState(true)
@@ -67,7 +67,7 @@ window.location.replace("/")
 
 
     }, []);   // Run the effect only once after the component mounts
-    const [isSidebarVisible, setSidebarVisibility] = useState(false);
+    const [isSidebarVisible, setSidebarVisibility] = useState(true);
 
     const toggleSidebar = () => {
       setSidebarVisibility(!isSidebarVisible);
@@ -116,7 +116,7 @@ window.location.replace("/")
 
     useEffect(() => {
       // Fetch questions from Django API
-      axios.get('http://localhost:8000/api/get-questions/')
+      axios.get(`${API_BASE_URL}/api/get-questions/`)
         .then(response => {
           setQuestions(response.data.questions);
         })
@@ -129,8 +129,8 @@ window.location.replace("/")
         <>
         <Navbar onSidebarToggle={toggleSidebar} />
 
-      <div className={`flex ${!isSidebarVisible?'justify-center':'justify-between'}` }>
-     <div>  {isSidebarVisible && <Sidebar1 dashboard={handledashboard} home={handlehome} signout={handlelogout} notification={handlenotification} />}</div> 
+      <div className={`flex h-fit ${!isSidebarVisible?'justify-center ':'justify-between'}` }>
+      <div className={`sidebar-container h-full ${isSidebarVisible ? 'sidebar-visible' : ''}`}>  {isSidebarVisible && <Sidebar1 dashboard={handledashboard} home={handlehome} signout={handlelogout} notification={handlenotification} />}</div> 
            
 {notification?
 

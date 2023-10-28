@@ -50,7 +50,10 @@ urlpatterns = [
           path('api/google-login1/', publicuser_views.GoogleLoginAPIView.as_view(), name='google-login'),
            path('api/notifications/', views.get_notifications, name='get_notifications'),
             path('api/create-notifications/', views.create_notification, name='create_notifications'),
+             path('api/get-events/', views.get_events, name='get_events'),
+            path('api/create-events/', views.create_events, name='create_events'),
              path('api/delete-notification/', views.delete_notification, name='delete_notification'),
+               path('api/delete-events/', views.delete_events, name='delete_event'),
               path('api/tick-notification/', views.tick_notification, name='tick_notification'),
                path('api/get-founders/', views.get_founders, name='ff'),
 
