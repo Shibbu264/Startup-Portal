@@ -338,7 +338,7 @@ def create_notification(request):
     else:
         return Response({'error': 'Invalid request method'}, status=status.HTTP_400_BAD_REQUEST)    
 from django.utils import timezone
-from datetime import datetime
+from datetime import datetime,timedelta
 @api_view(['POST'])
 def create_events(request):
     if request.method == 'POST':
@@ -349,7 +349,10 @@ def create_events(request):
         event_date_time = datetime.fromisoformat(date[:-1])
 
 
-        formatted_date_time = f"{event_date_time.day} {event_date_time.strftime('%B')} {event_date_time.strftime('%I:%M %p')}"
+        adjusted_date_time = event_date_time + timedelta(hours=5, minutes=30)
+
+# Format the adjusted datetime object
+        formatted_date_time = adjusted_date_time.strftime('%d %B %I:%M %p')
         print(formatted_date_time)
        
         try:

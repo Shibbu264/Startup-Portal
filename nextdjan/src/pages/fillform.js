@@ -10,7 +10,7 @@ import Sidebar1 from '@/components/sidebar';
 import Founderdashboard from '@/components/founderdashboard';
 import Question from '@/components/Questions';
 import Notification from '@/components/notification';
-const API_BASE_URL = 'http://localhost:8000'; 
+const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:8000"; 
 const PersonalizedDashboard = () => {
     let router= useRouter()
   const[dashvisible,setdashvisibily]=useState(true)
@@ -116,7 +116,7 @@ window.location.replace("/")
 
     useEffect(() => {
       // Fetch questions from Django API
-      axios.get('http://localhost:8000/api/get-questions/')
+      axios.get(`${API_BASE_URL}/api/get-questions/`)
         .then(response => {
           setQuestions(response.data.questions);
         })

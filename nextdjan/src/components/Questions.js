@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-const API_BASE_URL = 'http://localhost:8000'; 
+const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:8000"; 
 
 
 
@@ -10,7 +10,7 @@ export default function Question ({}){
     const[loading,setloading]=useState(false)
     useEffect(() => {
         // Fetch questions from Django API
-        axios.get('http://localhost:8000/api/get-questions/')
+        axios.get(`${API_BASE_URL}/api/get-questions/`)
           .then(response => {
            
             setQuestions(response.data.questions);

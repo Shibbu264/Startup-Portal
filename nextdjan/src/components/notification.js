@@ -7,7 +7,7 @@ import axios from 'axios';
 
 
 export default function Notification(xyz  ){
-    const API_BASE_URL = 'http://localhost:8000'; 
+    const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:8000"; 
     const[notifications,setnotification]=useState([])
     const[loading,setloading]=useState(false)
     const[tick,settick]=useState(true)

@@ -5,7 +5,7 @@ import axios from 'axios';
 import { logout1 } from './api/auth';
 import Footer from '@/components/footer';
 import Navbar from '@/components/navbar';
-const API_BASE_URL = 'http://localhost:8000'; 
+const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:8000"; 
 const Publicuserdashboard
  = () => {
    
@@ -150,17 +150,7 @@ window.location.replace("/")
     };
     
     
-    // useEffect(() => {
-    //   // Fetch questions from Django API
-    //   axios.get('http://localhost:8000/api/get-questions/')
-    //     .then(response => {
-    //       setQuestions(response.data.questions);
-    //     })
-    //     .catch(error => {
-    //       console.error('Error fetching questions:', error);
-    //     });
-    // }, []);
-    
+  
     
     
     return (     
@@ -175,7 +165,7 @@ window.location.replace("/")
                 <label className='text-black font-bold'>
                     Profile Picture:
                     
-                    {profilePictureUrl && <img src={`http://localhost:8000`+profilePictureUrl} className='w-36 h-36 my-6 block mx-auto rounded-full' alt="Profile" />}
+                    {profilePictureUrl && <img src={API_BASE_URL+profilePictureUrl} className='w-36 h-36 my-6 block mx-auto rounded-full' alt="Profile" />}
                     <input type="file" accept="image/*" onChange={(e) => setProfilePicture(e.target.files[0])} />
                 </label>
                 <button className='rounded-lg p-2 my-3 w-28 bg-green-500 block 'onClick={handleFormSubmit}>Save</button>
@@ -186,7 +176,7 @@ window.location.replace("/")
       {personalizedData.map((data) => (
         <div key={data.id} className='flex justify-center'>
         <div key={data.id} className="w-[30%]  flex justify-center items-center bg-white border my-6 border-gray-200 border-x-2 border-y-2 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-             <img className='w-56 rounded-full h-56' src={`http://localhost:8000`+data.profile_picture} alt="Profile" />
+             <img className='w-56 rounded-full h-56' src={API_BASE_URL+data.profile_picture} alt="Profile" />
          <div>
           <h2 className='my-2 text-center'>User ID: {data.user.id}</h2>
         <div className='mx-3'>  <p>Username: {data.user.username}</p>

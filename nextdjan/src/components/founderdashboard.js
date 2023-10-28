@@ -16,7 +16,7 @@ export default function Founderdashboard (xyz){
     };
 
 
-    const API_BASE_URL = 'http://localhost:8000'; 
+    const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:8000"; 
     const [date, setDate] = useState(new Date()); // Initialize state for the selected date
 const[events,setevents]=useState([])
 const[createdevents,seteventsforcreation]=useState("")
@@ -242,7 +242,7 @@ const handledelete = async (event,index)=>{
             
                     
                     {profilePictureUrl &&
-                    <img className="sm:w-[180px] sm:h-[180px] w-[120px] h-[120px] rounded-xl shadow-inner border-4 border-sky-600" src={`http://localhost:8000`+profilePictureUrl} />
+                    <img className="sm:w-[180px] sm:h-[180px] w-[120px] h-[120px] rounded-xl shadow-inner border-4 border-sky-600" src={API_BASE_URL+profilePictureUrl} />
                     }
                     <input className="" type="file" accept="image/*" onChange={(e) => setProfilePicture(e.target.files[0])} />
                 
@@ -344,6 +344,7 @@ const handledelete = async (event,index)=>{
           timeIntervals={15}
           dateFormat="MMMM d, yyyy h:mm aa"
           className="form-control"
+          
         />
             <button onClick={createevent} className="mx-2 my-2 btn btn-blue">Add Event</button>
             </div>
