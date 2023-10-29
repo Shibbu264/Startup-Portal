@@ -222,7 +222,7 @@ const handledelete = async (event,index)=>{
             await setloading(false) 
            
         } catch (error) {
-            alert('Error saving personalized data:', error);
+            alert('Error saving personalized data,Check for phonenumber length', error);
         }
        
     }
