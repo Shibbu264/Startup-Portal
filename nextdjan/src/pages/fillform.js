@@ -10,7 +10,7 @@ import Sidebar1 from '@/components/sidebar';
 import Founderdashboard from '@/components/founderdashboard';
 import Question from '@/components/Questions';
 import Notification from '@/components/notification';
-const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:8000"; 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL 
 const PersonalizedDashboard = () => {
     let router= useRouter()
   const[dashvisible,setdashvisibily]=useState(true)

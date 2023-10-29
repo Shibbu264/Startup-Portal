@@ -5,7 +5,7 @@ import axios from 'axios';
 import { logout1 } from './api/auth';
 import Footer from '@/components/footer';
 import Navbar from '@/components/navbar';
-const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:8000"; 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL 
 const Publicuserdashboard
  = () => {
    
