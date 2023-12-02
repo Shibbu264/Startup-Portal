@@ -92,7 +92,8 @@ body {
 .form-control{
   color: #FF3D00;
   font-weight: 600;
-  padding: 1px;
+  padding: 1px 8px;
+  
   display: block;
   margin: auto;
   border: 1px solid black ;

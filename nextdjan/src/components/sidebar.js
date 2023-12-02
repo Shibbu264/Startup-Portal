@@ -7,7 +7,7 @@ return(
 <>
 
 
-<aside id="default-sidebar" className={`  top-0 left-0 z-40 w-64  h-full  transition-transform -translate-x-full  sm:translate-x-0 ${sidebar?'':'hidden'} aria-label="Sidebar"`}>
+<aside id="default-sidebar" className={`hidden sm:inline  top-0 left-0 z-40 w-64  h-full  transition-transform -translate-x-full  sm:translate-x-0 ${sidebar?'':'hidden'} aria-label="Sidebar"`}>
    <div className="h-full rounded-e-sm px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
     <h1 className='text-red-500 font-semibold cursor-pointer flex justify-end text-2xl rounded-full' onClick={()=>{hidesidebar(!sidebar)}}>X</h1>
       <ul className="space-y-2 font-medium">

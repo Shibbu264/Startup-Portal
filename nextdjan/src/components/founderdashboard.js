@@ -232,12 +232,12 @@ const handledelete = async (event,index)=>{
 
 
     return(
-<div className="h-fit block mx-auto max-w-screen">
+<div className="h-fit flex flex-col w-fit justify-center ">
 
             
            
-          {loading?  <form className='text-xl text-center  my-2 p-6 border-x-2 border-y-2 mx-2 rounded-xl border-sky-600    ' onSubmit={handleFormSubmit}>
-           <div className="flex flex-row justify-center  mt-12 ">
+          {loading?  <form className='text-xl text-center flex justify-center    my-2 p-6 border-x-2 border-y-2 w-[90%] mx-2 rounded-xl border-sky-600    ' onSubmit={handleFormSubmit}>
+           <div className="flex sm:flex-row flex-col justify-center items-center  mt-12 ">
             <div className="flex justify-center flex-col items-center">
             
                     
@@ -283,21 +283,21 @@ const handledelete = async (event,index)=>{
         <span class="sr-only">Loading...</span>
     </div>}
 
-{loading?<div className="sm:flex sm:flex-row block justify-center items-start  h-fit gap-[10%]     ">
-<div className="flex  flex-col items-center justify-center my-2 mx-12">
+{loading?<div className="sm:flex w-[90%] sm:w-fit mx-2 sm:flex-row flex-col justify-center items-start  h-fit     ">
+<div className="flex  flex-col items-center justify-center my-2 ">
     <h1 className="text-sky-600 font-bold text-2xl text-center mb-3">Interested Investors</h1>
           { investors.map((investor,index) => (
-            <div key={index}  className="flex items-center w-[100%] py-6 p-4 border-y-2 mx-1 rounded-md border-white text-blue-800 bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+            <div key={index}  className="flex items-center w-[100%] py-6 h-24 p-4 border-y-2 mx-1 rounded-md border-white text-blue-800 bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
                     <svg className="flex-shrink-0 w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                     </svg>
                     <span className="sr-only">Info</span>
-                    <div key={index} className="ml-3 text-lg font-medium">
+                    <div key={index} className="sm:ml-3 ml-1 mr-auto  text-md font-medium">
                      {investor}
                     </div>
-                    <div className="block ml-auto">
-                    <button className="ml-8 w-44 bg-green-500 rounded-lg px-1 text-lg text-white py-1">Schedule Meeting</button>
-                    <button  type="button" class="ml-auto -mx-1.5 -my-1.5 bg-blue-50 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-blue-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-1" aria-label="Close">
+                    <div className="flex self-end justify-end mr-4 items-center ">
+                    <button className="ml-8 w-fit bg-green-500 rounded-lg px-1 text-md text-white py-1">Plan Meeting</button>
+                    <button  type="button" class="ml-auto  -mx-1.5 -my-1.5 bg-blue-50 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-blue-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-1" aria-label="Close">
       <span class="sr-only">Close</span>
       <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
@@ -315,16 +315,16 @@ const handledelete = async (event,index)=>{
             
 <div className="mt-2 mb-1 flex flex-col justify-center">
     {events.map((event,index) => (
-            <div key={index}  className="flex items-center w-[100%] py-6 p-4 border-y-2 mx-1 rounded-md border-white text-blue-800 bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+            <div key={index}  className="flex items-center w-[90%] py-4 px-2 border-y-2 mx-1 rounded-md border-white text-blue-800 bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
             <svg className="flex-shrink-0 w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
             </svg>
             <span className="sr-only">Info</span>
-            <div key={index} className="ml-3 text-lg font-medium">
+            <div key={index} className="ml-3 sm:text-lg text-md font-medium">
              {event.events}
             </div>
-            <div className="block ml-auto">
-            <button className="ml-8 w-fit bg-green-500 rounded-lg mr-3 px-2 text-lg text-white py-1">{event.date}</button>
+            <div className="flex justify-end items-center">
+            <button className="ml-8 w-fit bg-green-500 rounded-lg mr-3 px-2 sm:text-lg text-md text-white py-1">{event.date}</button>
             <button onClick={()=>{handledelete(event.events,index)}}  type="button" class="ml-auto -mx-1.5 -my-1.5 bg-blue-50 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-blue-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-1" aria-label="Close">
 <span class="sr-only">Close</span>
 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -334,7 +334,7 @@ const handledelete = async (event,index)=>{
            </div>
     </div>
     ))}
-<input type="text" onChange={handleventchange} value={createdevents}  className="p-1 w-[90%] rounded-md block mx-auto font-semibold my-2 border-x-black border-y-black border-x-2 border-y-2" placeholder="Type event"></input>
+<input type="text" onChange={handleventchange} value={createdevents}  className="p-1 w-[90%] rounded-md flex justify-center items-center font-semibold my-2 border-x-black border-y-black border-x-2 border-y-2" placeholder="Type event"></input>
 <DatePicker 
           id="eventDateTime"
           selected={selectedDateTime}
@@ -343,10 +343,10 @@ const handledelete = async (event,index)=>{
           timeFormat="HH:mm"
           timeIntervals={15}
           dateFormat="MMMM d, yyyy h:mm aa"
-          className="form-control"
+          className="form-control "
           
         />
-            <button onClick={createevent} className="mx-2 my-2 btn btn-blue">Add Event</button>
+            <button onClick={createevent} className="mx-2 my-2 flex  self-center btn btn-blue">Add Event</button>
             </div>
             
   </div>    

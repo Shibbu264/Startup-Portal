@@ -129,13 +129,13 @@ window.location.replace("/")
         <>
         <Navbar onSidebarToggle={toggleSidebar} />
 
-      <div className={`flex h-fit ${!isSidebarVisible?'justify-center ':'justify-between'}` }>
+      <div className={`flex max-sm:w-fit h-fit ${!isSidebarVisible?'justify-center ':'sm:justify-between justify-center'}` }>
       <div className={`sidebar-container h-full ${isSidebarVisible ? 'sidebar-visible' : ''}`}>  {isSidebarVisible && <Sidebar1 dashboard={handledashboard} home={handlehome} signout={handlelogout} notification={handlenotification} />}</div> 
            
 {notification?
 
   <Notification xyz={authstate}/>
-:dashvisible?<div className='flex-1'><Founderdashboard xyz={authstate}/></div>:
+:dashvisible?<div className='sm:flex-1 flex justify-center '><Founderdashboard xyz={authstate}/></div>:
 <Question/>}
 
 
