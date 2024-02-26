@@ -15,7 +15,7 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+import dj_database_url
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-+s@vg4=#6hst9r&7z20^_73z*!r-lm43k6%hvp(tr4v#0^49le
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.vercel.app','localhost','onrender.com']
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
@@ -94,10 +94,7 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+	"default": dj_database_url.parse("postgres://sihdatabase_user:o8ZPfPWwHbl9gwTzgNiGuqXhb52hmvBc@dpg-cne863ol5elc73f50ihg-a.oregon-postgres.render.com/sihdatabase")
 }
 
 
