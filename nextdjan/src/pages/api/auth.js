@@ -172,7 +172,7 @@ export const register1 = async (email,username, password) => {
       .then((data) => {
         console.log(data)
        
-        if(data.error){ alert("Auth error occured!") }
+        if(data.error){ alert("Auth error occured!",data.error) }
         else{
          localStorage.setItem('authToken', data.access_token)
          window.location.replace("/welcome");

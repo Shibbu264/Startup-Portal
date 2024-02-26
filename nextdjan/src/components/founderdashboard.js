@@ -16,7 +16,7 @@ export default function Founderdashboard (xyz){
     };
 
 
-    const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:8000"; 
+    const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ; 
     const [date, setDate] = useState(new Date()); // Initialize state for the selected date
 const[events,setevents]=useState([])
 const[createdevents,seteventsforcreation]=useState("")
